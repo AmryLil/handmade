@@ -79,10 +79,10 @@
         </div>
 
         <!-- Cart icon with badge -->
-        @auth
+        @if (Auth::check())
             <a href="#" class="relative p-2 rounded-full hover:bg-slate-100 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-600" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-600" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
@@ -93,10 +93,10 @@
                     </span>
                 @endif
             </a>
-        @endauth
+        @endif
 
         <!-- User profile menu -->
-        @auth
+        @if (Auth::check())
             <div x-data="{ drawerOpen: false }">
                 <button @click="drawerOpen = true"
                     class="flex items-center cursor-pointer space-x-2 border border-slate-200 rounded-full pr-3 pl-1 py-1 hover:bg-slate-50 transition-colors">
@@ -153,7 +153,7 @@
                             </div>
                             <div>
                                 <h2 class="text-xl font-bold">{{ auth()->user()->name }}</h2>
-                                <p class="text-maroon-200 text-sm">{{ auth()->user()->email }}</p>
+                                <p class="text-maroon-200 text-sm">{{ auth()->user()->email_2222336 }}</p>
                             </div>
                         </div>
                     </div>
@@ -184,7 +184,7 @@
 
                         <div class="border-t border-slate-200 my-4"></div>
 
-                        <form method="POST" action="#">
+                        <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button type="submit"
                                 class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-red-50 w-full">
@@ -202,12 +202,12 @@
         @else
             <!-- Login/Register buttons -->
             <div class="flex items-center space-x-2">
-                <a href="/admin/login"
+                <a href="/login"
                     class="px-4 py-2 text-maroon-600 font-medium hover:bg-maroon-50 rounded-lg transition-colors">Login</a>
                 <a href="#"
                     class="px-4 py-2 bg-maroon-600 text-white font-medium rounded-lg hover:bg-maroon-700 transition-colors">Register</a>
             </div>
-        @endauth
+        @endif
 
     </div>
 </header>

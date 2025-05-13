@@ -28,7 +28,7 @@ class PermintaanCustomResource extends Resource
                             ->schema([
                                 Forms\Components\Select::make('user_id_2222336')
                                     ->label('Pelanggan')
-                                    ->relationship('user', 'name_2222336')
+                                    ->relationship('user', 'name')
                                     ->searchable()
                                     ->preload()
                                     ->required(),
@@ -88,7 +88,7 @@ class PermintaanCustomResource extends Resource
                 Tables\Columns\TextColumn::make('id_2222336')
                     ->label('ID Permintaan')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('user.name_2222336')
+                Tables\Columns\TextColumn::make('user.name')
                     ->label('Pelanggan')
                     ->sortable()
                     ->searchable(),

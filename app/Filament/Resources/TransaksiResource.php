@@ -40,7 +40,7 @@ class TransaksiResource extends Resource
                     ->schema([
                         Select::make('id_pelanggan_2222336')
                             ->label('Pelanggan')
-                            ->relationship('pelanggan', 'name_2222336')
+                            ->relationship('pelanggan', 'name')
                             ->searchable()
                             ->preload()
                             ->required(),
@@ -88,11 +88,10 @@ class TransaksiResource extends Resource
                         Select::make('status_2222336')
                             ->label('Status')
                             ->options([
-                                'pending'   => 'Pending',
-                                'paid'      => 'Paid',
-                                'delivered' => 'Delivered',
-                                'completed' => 'Completed',
-                                'cancelled' => 'Cancelled',
+                                'pending' => 'Pending',
+                                'dikemas' => 'Dikemas',
+                                'dikirim' => 'Dikirim',
+                                'selesai' => 'Selesai',
                             ])
                             ->required()
                             ->default('pending'),
@@ -124,7 +123,7 @@ class TransaksiResource extends Resource
                     ->searchable()
                     ->sortable()
                     ->copyable(),
-                TextColumn::make('pelanggan.name_2222336')
+                TextColumn::make('pelanggan.name')
                     ->label('Pelanggan')
                     ->searchable()
                     ->sortable(),
@@ -177,15 +176,14 @@ class TransaksiResource extends Resource
                 SelectFilter::make('status_2222336')
                     ->label('Status')
                     ->options([
-                        'pending'   => 'Pending',
-                        'paid'      => 'Paid',
-                        'delivered' => 'Delivered',
-                        'completed' => 'Completed',
-                        'cancelled' => 'Cancelled',
+                        'pending' => 'Pending',
+                        'dikemas' => 'dikemas',
+                        'dikirim' => 'dikirim',
+                        'selesai' => 'selesai',
                     ]),
                 SelectFilter::make('id_pelanggan_2222336')
                     ->label('Pelanggan')
-                    ->relationship('pelanggan', 'name_2222336')
+                    ->relationship('pelanggan', 'name')
                     ->searchable()
                     ->preload(),
                 SelectFilter::make('id_produk_2222336')
@@ -231,11 +229,10 @@ class TransaksiResource extends Resource
                             Select::make('status_2222336')
                                 ->label('Status')
                                 ->options([
-                                    'pending'   => 'Pending',
-                                    'paid'      => 'Paid',
-                                    'delivered' => 'Delivered',
-                                    'completed' => 'Completed',
-                                    'cancelled' => 'Cancelled',
+                                    'pending' => 'Pending',
+                                    'dikemas' => 'dikemas',
+                                    'dikirim' => 'dikirim',
+                                    'selesai' => 'selesai',
                                 ])
                                 ->required(),
                         ])

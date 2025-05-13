@@ -62,7 +62,7 @@
                                 <img src="{{ $product->getImageUrlAttribute() }}" alt="{{ $product->nama_2222336 }}"
                                     class="w-full h-96 object-cover rounded-lg">
                             @else
-                                <div class="w-full h-96 bg-gray-200 flex items-center justify-center rounded-lg">
+                                <div class="wsw-full h-96 bg-gray-200 flex items-center justify-center rounded-lg">
                                     <span class="text-gray-500">No Image</span>
                                 </div>
                             @endif

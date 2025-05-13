@@ -67,7 +67,7 @@
                     @endif
 
                     <!-- Form -->
-                    <form action="#" method="POST" class="space-y-4">
+                    <form action="{{ route('login.submit') }}" method="POST" class="space-y-4">
                         @csrf
                         <div class="flex flex-col space-y-4">
                             <div class="relative">
@@ -118,7 +118,7 @@
                     <!-- Signup Link -->
                     <div class="mt-6 text-center text-sm text-slate-600">
                         Don't have an account?
-                        <a href="#" class="text-maroon-600 font-semibold hover:underline">Create
+                        <a href="/register" class="text-maroon-600 font-semibold hover:underline">Create
                             Account</a>
                     </div>
 

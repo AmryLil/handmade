@@ -20,7 +20,7 @@
                         class="bg-white overflow-hidden shadow-sm rounded-lg border border-gray-200 transition-all hover:shadow-md">
                         <div class="relative pb-2/3">
                             @if ($item->path_img_2222336)
-                                <img src="{{ asset($item->path_img_2222336) }}" alt="{{ $item->nama_2222336 }}"
+                                <img src="{{ asset('storage/' . $item->path_img_2222336) }}" alt="{{ $item->nama_2222336 }}"
                                     class="w-full h-48 object-cover">
                             @else
                                 <div class="w-full h-48 bg-gray-100 flex items-center justify-center">

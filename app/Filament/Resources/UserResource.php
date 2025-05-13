@@ -27,7 +27,7 @@ class UserResource extends Resource
             ->schema([
                 Forms\Components\Section::make('Informasi Akun')
                     ->schema([
-                        Forms\Components\TextInput::make('name_2222336')
+                        Forms\Components\TextInput::make('name')
                             ->label('Nama')
                             ->required()
                             ->maxLength(255),
@@ -87,7 +87,7 @@ class UserResource extends Resource
                 Tables\Columns\ImageColumn::make('profile_photo_2222336')
                     ->label('Foto')
                     ->circular(),
-                Tables\Columns\TextColumn::make('name_2222336')
+                Tables\Columns\TextColumn::make('name')
                     ->label('Nama')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email_2222336')
