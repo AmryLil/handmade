@@ -204,7 +204,7 @@
             <div class="flex items-center space-x-2">
                 <a href="/login"
                     class="px-4 py-2 text-maroon-600 font-medium hover:bg-maroon-50 rounded-lg transition-colors">Login</a>
-                <a href="#"
+                <a href="/register"
                     class="px-4 py-2 bg-maroon-600 text-white font-medium rounded-lg hover:bg-maroon-700 transition-colors">Register</a>
             </div>
         @endif

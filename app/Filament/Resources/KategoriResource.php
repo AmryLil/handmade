@@ -52,8 +52,7 @@ class KategoriResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('path_img_2222336')
-                    ->label('Gambar')
-                    ->image(),
+                    ->label('Gambar'),
                 Tables\Columns\TextColumn::make('nama_2222336')
                     ->label('Nama Kategori')
                     ->searchable(),
