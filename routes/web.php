@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\KategoriAdminController;
+use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProdukUserController;
 use Illuminate\Support\Facades\Route;
 
@@ -51,6 +53,12 @@ Route::prefix('produk')->group(function () {
 
     // Filter products by price
     Route::get('/filter-by-price', [ProdukUserController::class, 'filterByPrice'])->name('products.filter.price');
+});
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    // Produk routes
+    Route::resource('produk', ProdukController::class);
+    Route::resource('kategori_produk', KategoriAdminController::class);
 });
 
 // Search routes

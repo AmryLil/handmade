@@ -28,17 +28,17 @@ class KategoriResource extends Resource
             ->schema([
                 Forms\Components\Section::make()
                     ->schema([
-                        Forms\Components\TextInput::make('nama_2222336')
+                        Forms\Components\TextInput::make('nama_222336')
                             ->label('Nama Kategori')
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\Textarea::make('deskripsi_2222336')
+                        Forms\Components\Textarea::make('deskripsi_222336')
                             ->label('Deskripsi')
                             ->required(),
-                        Forms\Components\TextInput::make('tags_2222336')
+                        Forms\Components\TextInput::make('tags_222336')
                             ->label('Tag (pisahkan dengan koma)')
                             ->maxLength(100),
-                        Forms\Components\FileUpload::make('path_img_2222336')
+                        Forms\Components\FileUpload::make('path_img_222336')
                             ->label('Gambar Kategori')
                             ->image()
                             ->required()
@@ -51,16 +51,16 @@ class KategoriResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('path_img_2222336')
+                Tables\Columns\ImageColumn::make('path_img_222336')
                     ->label('Gambar'),
-                Tables\Columns\TextColumn::make('nama_2222336')
+                Tables\Columns\TextColumn::make('nama_222336')
                     ->label('Nama Kategori')
                     ->searchable(),
                 // Tables\Columns\TextColumn::make('produk_count')
                 //     ->label('Jumlah Produk')
                 //     ->counts('produk')
                 //     ->sortable(),
-                Tables\Columns\TextColumn::make('tags_2222336')
+                Tables\Columns\TextColumn::make('tags_222336')
                     ->label('Tag')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')

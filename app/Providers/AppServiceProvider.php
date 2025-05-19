@@ -25,11 +25,11 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         Gambar::updated(function ($gambar) {
-            if ($gambar->is_main_2222336) {
+            if ($gambar->is_main_222336) {
                 // Jika gambar ini ditetapkan sebagai utama, nonaktifkan is_main untuk gambar lain dari produk yang sama
-                Gambar::where('produk_id_2222336', $gambar->produk_id_2222336)
-                    ->where('id_2222336', '!=', $gambar->id_2222336)
-                    ->update(['is_main_2222336' => false]);
+                Gambar::where('produk_id_222336', $gambar->produk_id_222336)
+                    ->where('id_222336', '!=', $gambar->id_222336)
+                    ->update(['is_main_222336' => false]);
             }
         });
     }

@@ -17,7 +17,7 @@
                         </h1>
                         <p class="mt-4 text-slate-100 text-lg">Temukan koleksi unik handmade dari pengrajin lokal terbaik
                         </p>
-                        <a href="{{ route('products.index') }}"
+                        <a href="#"
                             class="mt-8 inline-block bg-maroon-600 hover:bg-maroon-700 text-white font-medium py-3 px-6 rounded-md transition duration-300">
                             Belanja Sekarang
                         </a>
@@ -109,23 +109,23 @@
                 @forelse($newestProducts as $product)
                     <div class="bg-white rounded-lg shadow-md overflow-hidden transition duration-300 hover:shadow-xl">
                         @if ($product->gambar->count() > 0)
-                            <img src="{{ $product->getImageUrlAttribute() }}" alt="{{ $product->nama_2222336 }}"
-                                alt="{{ $product->nama_2222336 }}" class="w-full h-56 object-cover">
+                            <img src="{{ $product->getImageUrlAttribute() }}" alt="{{ $product->nama_222336 }}"
+                                alt="{{ $product->nama_222336 }}" class="w-full h-56 object-cover">
                         @else
                             <div class="w-full h-56 bg-slate-200 flex items-center justify-center">
                                 <span class="text-slate-400">No Image</span>
                             </div>
                         @endif
                         <div class="p-6">
-                            <h3 class="text-xl font-bold text-slate-900">{{ $product->nama_2222336 }}</h3>
+                            <h3 class="text-xl font-bold text-slate-900">{{ $product->nama_222336 }}</h3>
                             <div class="flex text-maroon-500 mt-1">
                                 ★★★★★
                             </div>
-                            <p class="text-slate-600 mt-2">{{ Str::limit($product->deskripsi_2222336, 100) }}</p>
+                            <p class="text-slate-600 mt-2">{{ Str::limit($product->deskripsi_222336, 100) }}</p>
                             <p class="text-maroon-700 font-bold text-lg mt-4">Rp
-                                {{ number_format($product->harga_2222336, 0, ',', '.') }}</p>
+                                {{ number_format($product->harga_222336, 0, ',', '.') }}</p>
                             <div class="mt-4 flex space-x-2">
-                                <a href="{{ route('products.show', $product->id_2222336) }}"
+                                <a href="#"
                                     class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-800 text-center py-2 rounded transition duration-300">
                                     Detail
                                 </a>
@@ -259,65 +259,6 @@
         </div>
     </section>
 
-    <!-- Testimonials Section -->
-    <section class="py-12 bg-slate-50">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-10">
-                <h2 class="text-3xl font-bold text-slate-900">Ulasan Pelanggan</h2>
-                <p class="text-maroon-600 mt-2">Apa kata pelanggan tentang produk handmade kami</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Testimoni 1 -->
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <div class="flex text-maroon-500 mb-4">★★★★★</div>
-                    <p class="text-slate-600 italic mb-4">"Tas rajut yang saya pesan benar-benar cantik dan detail
-                        pengerjaannya sangat rapi. Sangat puas dengan kualitasnya!"</p>
-                    <div class="flex items-center">
-                        <div class="bg-maroon-100 w-10 h-10 rounded-full flex items-center justify-center mr-3">
-                            <span class="text-maroon-700 font-bold">DP</span>
-                        </div>
-                        <div>
-                            <p class="font-semibold text-slate-900">Dewi Pratiwi</p>
-                            <p class="text-sm text-slate-500">Jakarta</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Testimoni 2 -->
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <div class="flex text-maroon-500 mb-4">★★★★★</div>
-                    <p class="text-slate-600 italic mb-4">"Saya memesan boneka custom untuk hadiah ulang tahun anak saya
-                        dan hasilnya melebihi ekspektasi. Pengerjaan cepat dan komunikasi yang baik!"</p>
-                    <div class="flex items-center">
-                        <div class="bg-maroon-100 w-10 h-10 rounded-full flex items-center justify-center mr-3">
-                            <span class="text-maroon-700 font-bold">BS</span>
-                        </div>
-                        <div>
-                            <p class="font-semibold text-slate-900">Budi Santoso</p>
-                            <p class="text-sm text-slate-500">Surabaya</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Testimoni 3 -->
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <div class="flex text-maroon-500 mb-4">★★★★★</div>
-                    <p class="text-slate-600 italic mb-4">"Hiasan dinding macramé yang saya beli sangat indah dan menjadi
-                        pusat perhatian di ruang tamu saya. Pengrajinnya sangat berbakat!"</p>
-                    <div class="flex items-center">
-                        <div class="bg-maroon-100 w-10 h-10 rounded-full flex items-center justify-center mr-3">
-                            <span class="text-maroon-700 font-bold">RA</span>
-                        </div>
-                        <div>
-                            <p class="font-semibold text-slate-900">Rina Anggraini</p>
-                            <p class="text-sm text-slate-500">Bandung</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
 
 

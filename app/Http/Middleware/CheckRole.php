@@ -24,7 +24,7 @@ class CheckRole
     }
 
     // Check if user has the required role
-    if (Auth::user()->role_2222336 !== $role) {
+    if (Auth::user()->role_222336 !== $role) {
       return redirect()->route('home')->with('error', 'Anda tidak memiliki akses ke halaman tersebut.');
     }
 

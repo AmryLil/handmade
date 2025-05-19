@@ -45,30 +45,30 @@ class AuthController extends Controller
 
     // Attempt login with custom column mapping
     if (Auth::attempt([
-      'email_2222336' => $credentials['email'],
-      'password'      => $credentials['password']  // Laravel will use getAuthPassword internally
+      'email_222336' => $credentials['email'],
+      'password'     => $credentials['password']  // Laravel will use getAuthPassword internally
     ])) {
       // Regenerate session for security
       $request->session()->regenerate();
 
       // Store additional session data
       session([
-        'user_id'   => Auth::user()->id_2222336,
-        'user_role' => Auth::user()->role_2222336,
-        'email'     => Auth::user()->email_2222336,
+        'user_id'   => Auth::user()->id_222336,
+        'user_role' => Auth::user()->role_222336,
+        'email'     => Auth::user()->email_222336,
         'name'      => Auth::user()->name,
       ]);
 
       // Log success
       Log::info('Login successful for user:', [
-        'id'   => Auth::user()->id_2222336,
-        'role' => Auth::user()->role_2222336
+        'id'   => Auth::user()->id_222336,
+        'role' => Auth::user()->role_222336
       ]);
 
       // Redirect based on role
-      if (Auth::user()->role_2222336 === 'admin') {
+      if (Auth::user()->role_222336 === 'admin') {
         // For admin, redirect to admin panel (Filament or your custom admin)
-        return redirect('/admin')->with('success', 'Login berhasil!');
+        return redirect('/admin/produk')->with('success', 'Login berhasil!');
       } else {
         // For regular users
         return redirect('/')->with('success', 'Login berhasil!');
@@ -98,7 +98,7 @@ class AuthController extends Controller
   {
     $request->validate([
       'name'       => 'required|string|max:255',
-      'email'      => 'required|string|email|max:255|unique:users_2222336,email_2222336',
+      'email'      => 'required|string|email|max:255|unique:users_222336,email_222336',
       'password'   => 'required|string|min:8|confirmed',
       // Kolom lainnya tidak required
       'gender'     => 'nullable|in:male,female',
@@ -108,14 +108,14 @@ class AuthController extends Controller
     ]);
 
     $user = Users::create([
-      'name'               => $request->name,
-      'email_2222336'      => $request->email,
-      'password_2222336'   => Hash::make($request->password),
-      'gender_2222336'     => $request->gender,
-      'phone_2222336'      => $request->phone,
-      'address_2222336'    => $request->address,
-      'birth_date_2222336' => $request->birth_date,
-      'role_2222336'       => 'customer',
+      'name'              => $request->name,
+      'email_222336'      => $request->email,
+      'password_222336'   => Hash::make($request->password),
+      'gender_222336'     => $request->gender,
+      'phone_222336'      => $request->phone,
+      'address_222336'    => $request->address,
+      'birth_date_222336' => $request->birth_date,
+      'role_222336'       => 'customer',
     ]);
 
     Auth::login($user);

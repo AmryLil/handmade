@@ -10,33 +10,33 @@ class PermintaanCustom extends Model
 {
     use HasFactory;
 
-    protected $table      = 'permintaan_custom_2222336';
-    protected $primaryKey = 'id_2222336';
+    protected $table      = 'permintaan_custom_222336';
+    protected $primaryKey = 'id_222336';
     public $incrementing  = false;
     protected $keyType    = 'string';
 
     protected $fillable = [
-        'id_2222336',
-        'user_id_2222336',
-        'judul_2222336',
-        'deskripsi_2222336',
-        'path_img_2222336',
-        'status_2222336',
-        'harga_penawaran_2222336',
-        'harga_akhir_2222336',
-        'catatan_admin_2222336',
+        'id_222336',
+        'user_id_222336',
+        'judul_222336',
+        'deskripsi_222336',
+        'path_img_222336',
+        'status_222336',
+        'harga_penawaran_222336',
+        'harga_akhir_222336',
+        'catatan_admin_222336',
     ];
 
     protected static function boot()
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->id_2222336 = IdGenerator::generateId(new PermintaanCustom, 'CST', 8);
+            $model->id_222336 = IdGenerator::generateId(new PermintaanCustom, 'CST', 8);
         });
     }
 
     public function user()
     {
-        return $this->belongsTo(Users::class, 'user_id_2222336', 'id_2222336');
+        return $this->belongsTo(Users::class, 'user_id_222336', 'id_222336');
     }
 }

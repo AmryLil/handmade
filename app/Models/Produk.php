@@ -11,19 +11,19 @@ class Produk extends Model
 {
     use HasFactory;
 
-    protected $table      = 'produk_2222336';
-    protected $primaryKey = 'id_2222336';
+    protected $table      = 'produk_222336';
+    protected $primaryKey = 'id_222336';
     public $incrementing  = false;
     protected $keyType    = 'string';
 
     protected $fillable = [
-        'id_2222336',
-        'nama_2222336',
-        'deskripsi_2222336',
-        'harga_2222336',
-        'kategori_id_2222336',
-        'path_img_2222336',
-        'jumlah_2222336',
+        'id_222336',
+        'nama_222336',
+        'deskripsi_222336',
+        'harga_222336',
+        'kategori_id_222336',
+        'path_img_222336',
+        'jumlah_222336',
     ];
 
     /**
@@ -31,8 +31,8 @@ class Produk extends Model
      */
     public function getImageUrlAttribute()
     {
-        if ($this->path_img_2222336 && Storage::disk('public')->exists($this->path_img_2222336)) {
-            return Storage::url($this->path_img_2222336);
+        if ($this->path_img_222336 && Storage::disk('public')->exists($this->path_img_222336)) {
+            return Storage::url($this->path_img_222336);
         }
 
         return null;  // Or a default image placeholder
@@ -42,37 +42,37 @@ class Produk extends Model
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->id_2222336 = IdGenerator::generateId(new Produk, 'PRD', 8);
+            $model->id_222336 = IdGenerator::generateId(new Produk, 'PRD', 8);
         });
     }
 
     public function kategori()
     {
-        return $this->belongsTo(KategoriProduk::class, 'kategori_id_2222336', 'id_2222336');
+        return $this->belongsTo(KategoriProduk::class, 'kategori_id_222336', 'id_222336');
     }
 
     public function cartItems()
     {
-        return $this->hasMany(CartItem::class, 'product_id_2222336', 'id_2222336');
+        return $this->hasMany(CartItem::class, 'product_id_222336', 'id_222336');
     }
 
     public function transaksi()
     {
-        return $this->hasMany(Transaksi::class, 'id_produk_2222336', 'id_2222336');
+        return $this->hasMany(Transaksi::class, 'id_produk_222336', 'id_222336');
     }
 
     public function gambar()
     {
-        return $this->hasMany(Gambar::class, 'produk_id_2222336', 'id_2222336');
+        return $this->hasMany(Gambar::class, 'produk_id_222336', 'id_222336');
     }
 
     public function gambarUtama()
     {
-        return $this->gambar()->where('is_main_2222336', true)->first();
+        return $this->gambar()->where('is_main_222336', true)->first();
     }
 
     public function preview()
     {
-        return $this->hasMany(Preview::class, 'produk_id_2222336', 'id_2222336');
+        return $this->hasMany(Preview::class, 'produk_id_222336', 'id_222336');
     }
 }

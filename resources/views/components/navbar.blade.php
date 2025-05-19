@@ -17,28 +17,28 @@
                     class="absolute bottom-0 left-0 w-full h-0.5 bg-maroon-600 transform {{ request()->routeIs('home') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100' }} transition-transform"></span>
             </a>
 
-            <a href="{{ route('products.index') }}"
+            <a href="#"
                 class="relative group px-4 py-2 {{ request()->routeIs('produk*') ? 'text-maroon-600 font-medium' : 'text-slate-700' }}">
                 Produk
                 <span
                     class="absolute bottom-0 left-0 w-full h-0.5 bg-maroon-600 transform {{ request()->routeIs('products.index*') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100' }} transition-transform"></span>
             </a>
 
-            <a href="/kategori"
+            <a href="#"
                 class="relative group px-4 py-2 {{ request()->routeIs('kategori*') ? 'text-maroon-600 font-medium' : 'text-slate-700' }}">
                 Kategori
                 <span
                     class="absolute bottom-0 left-0 w-full h-0.5 bg-maroon-600 transform {{ request()->routeIs('kategori*') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100' }} transition-transform"></span>
             </a>
 
-            <a href="/tentangkami"
+            <a href="#"
                 class="relative group px-4 py-2 {{ request()->routeIs('tentang-kami') ? 'text-maroon-600 font-medium' : 'text-slate-700' }}">
                 Tentang Kami
                 <span
                     class="absolute bottom-0 left-0 w-full h-0.5 bg-maroon-600 transform {{ request()->routeIs('tentang-kami') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100' }} transition-transform"></span>
             </a>
 
-            <a href="/kontak"
+            <a href="#"
                 class="relative group px-4 py-2 {{ request()->routeIs('kontak') ? 'text-maroon-600 font-medium' : 'text-slate-700' }}">
                 Kontak
                 <span
@@ -49,34 +49,7 @@
 
     <!-- Right section -->
     <div class="flex items-center space-x-4">
-        <!-- Search button with dropdown -->
-        <div x-data="{ open: false }" class="relative">
-            <button @click="open = !open" class="p-2 rounded-full hover:bg-slate-100 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-slate-600">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-            </button>
 
-            <!-- Search Form -->
-            <div x-show="open" x-transition class="absolute top-12 right-0 bg-white shadow-lg rounded-lg p-4 w-72">
-                <form action="#" method="GET">
-                    <div class="flex items-center bg-slate-100 rounded-lg px-3 py-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-500 mr-2" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                        </svg>
-                        <input type="text" name="query" placeholder="Cari produk handmade..."
-                            class="bg-transparent border-none w-full focus:outline-none text-sm text-slate-700">
-                    </div>
-                    <div class="mt-2 text-xs text-slate-500">
-                        <p>Pencarian populer: Rajutan, Keramik, Perhiasan</p>
-                    </div>
-                </form>
-            </div>
-        </div>
 
         <!-- Cart icon with badge -->
         @if (Auth::check())
@@ -153,7 +126,7 @@
                             </div>
                             <div>
                                 <h2 class="text-xl font-bold">{{ auth()->user()->name }}</h2>
-                                <p class="text-maroon-200 text-sm">{{ auth()->user()->email_2222336 }}</p>
+                                <p class="text-maroon-200 text-sm">{{ auth()->user()->email_222336 }}</p>
                             </div>
                         </div>
                     </div>

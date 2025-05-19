@@ -23,23 +23,23 @@ class ProdukUserController extends Controller
     if ($request->has('search')) {
       $search = $request->input('search');
       $query
-        ->where('nama_2222336', 'like', "%{$search}%")
-        ->orWhere('deskripsi_2222336', 'like', "%{$search}%");
+        ->where('nama_222336', 'like', "%{$search}%")
+        ->orWhere('deskripsi_222336', 'like', "%{$search}%");
     }
 
     // Apply category filter if present
     if ($request->has('kategori')) {
       $kategoriId = $request->input('kategori');
-      $query->where('kategori_id_2222336', $kategoriId);
+      $query->where('kategori_id_222336', $kategoriId);
     }
 
     // Apply price range filter if present
     if ($request->has('min_price')) {
-      $query->where('harga_2222336', '>=', $request->input('min_price'));
+      $query->where('harga_222336', '>=', $request->input('min_price'));
     }
 
     if ($request->has('max_price')) {
-      $query->where('harga_2222336', '<=', $request->input('max_price'));
+      $query->where('harga_222336', '<=', $request->input('max_price'));
     }
 
     // Apply sorting if present
@@ -47,16 +47,16 @@ class ProdukUserController extends Controller
 
     switch ($sortBy) {
       case 'price_asc':
-        $query->orderBy('harga_2222336', 'asc');
+        $query->orderBy('harga_222336', 'asc');
         break;
       case 'price_desc':
-        $query->orderBy('harga_2222336', 'desc');
+        $query->orderBy('harga_222336', 'desc');
         break;
       case 'name_asc':
-        $query->orderBy('nama_2222336', 'asc');
+        $query->orderBy('nama_222336', 'asc');
         break;
       case 'name_desc':
-        $query->orderBy('nama_2222336', 'desc');
+        $query->orderBy('nama_222336', 'desc');
         break;
       case 'newest':
       default:
@@ -66,7 +66,7 @@ class ProdukUserController extends Controller
 
     // Paginate the results
     $products = $query
-      ->where('jumlah_2222336', '>', 0)
+      ->where('jumlah_222336', '>', 0)
       ->paginate(12);
 
     // Get all categories for the filter sidebar
@@ -87,9 +87,9 @@ class ProdukUserController extends Controller
       ->findOrFail($id);
 
     // Get related products (same category)
-    $relatedProducts = Produk::where('kategori_id_2222336', $product->kategori_id_2222336)
-      ->where('id_2222336', '!=', $id)
-      ->where('jumlah_2222336', '>', 0)
+    $relatedProducts = Produk::where('kategori_id_222336', $product->kategori_id_222336)
+      ->where('id_222336', '!=', $id)
+      ->where('jumlah_222336', '>', 0)
       ->inRandomOrder()
       ->limit(4)
       ->get();
@@ -107,8 +107,8 @@ class ProdukUserController extends Controller
   {
     $category = KategoriProduk::findOrFail($categoryId);
 
-    $products = Produk::where('kategori_id_2222336', $categoryId)
-      ->where('jumlah_2222336', '>', 0)
+    $products = Produk::where('kategori_id_222336', $categoryId)
+      ->where('jumlah_222336', '>', 0)
       ->orderBy('created_at', 'desc')
       ->paginate(12);
 
@@ -125,20 +125,20 @@ class ProdukUserController extends Controller
   public function home()
   {
     // Get 3 newest products
-    $newestProducts = Produk::where('jumlah_2222336', '>', 0)
+    $newestProducts = Produk::where('jumlah_222336', '>', 0)
       ->orderBy('created_at', 'desc')
       ->limit(3)
       ->get();
 
     // Get featured products (you might want to add a 'featured' column to your db later)
-    $featuredProducts = Produk::where('jumlah_2222336', '>', 0)
+    $featuredProducts = Produk::where('jumlah_222336', '>', 0)
       ->inRandomOrder()
       ->limit(8)
       ->get();
 
     // Get all product categories
     $categories = KategoriProduk::withCount(['produk' => function ($query) {
-      $query->where('jumlah_2222336', '>', 0);
+      $query->where('jumlah_222336', '>', 0);
     }])
       ->having('produk_count', '>', 0)
       ->get();
@@ -158,10 +158,10 @@ class ProdukUserController extends Controller
 
     $products = Produk::where(function ($query) use ($keyword) {
       $query
-        ->where('nama_2222336', 'like', "%{$keyword}%")
-        ->orWhere('deskripsi_2222336', 'like', "%{$keyword}%");
+        ->where('nama_222336', 'like', "%{$keyword}%")
+        ->orWhere('deskripsi_222336', 'like', "%{$keyword}%");
     })
-      ->where('jumlah_2222336', '>', 0)
+      ->where('jumlah_222336', '>', 0)
       ->orderBy('created_at', 'desc')
       ->paginate(12);
 
@@ -182,10 +182,10 @@ class ProdukUserController extends Controller
 
     $products = Produk::where(function ($query) use ($keyword) {
       $query
-        ->where('nama_2222336', 'like', "%{$keyword}%")
-        ->orWhere('deskripsi_2222336', 'like', "%{$keyword}%");
+        ->where('nama_222336', 'like', "%{$keyword}%")
+        ->orWhere('deskripsi_222336', 'like', "%{$keyword}%");
     })
-      ->where('jumlah_2222336', '>', 0)
+      ->where('jumlah_222336', '>', 0)
       ->orderBy('created_at', 'desc')
       ->limit(5)
       ->get();
@@ -200,7 +200,7 @@ class ProdukUserController extends Controller
    */
   public function newest()
   {
-    $products = Produk::where('jumlah_2222336', '>', 0)
+    $products = Produk::where('jumlah_222336', '>', 0)
       ->orderBy('created_at', 'desc')
       ->paginate(12);
 
@@ -220,9 +220,9 @@ class ProdukUserController extends Controller
     $min = $request->input('min_price', 0);
     $max = $request->input('max_price', PHP_INT_MAX);
 
-    $products = Produk::where('jumlah_2222336', '>', 0)
-      ->whereBetween('harga_2222336', [$min, $max])
-      ->orderBy('harga_2222336', 'asc')
+    $products = Produk::where('jumlah_222336', '>', 0)
+      ->whereBetween('harga_222336', [$min, $max])
+      ->orderBy('harga_222336', 'asc')
       ->paginate(12);
 
     $categories = KategoriProduk::all();

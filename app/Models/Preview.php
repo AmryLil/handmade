@@ -10,39 +10,39 @@ class Preview extends Model
 {
     use HasFactory;
 
-    protected $table      = 'preview_2222336';
-    protected $primaryKey = 'id_2222336';
+    protected $table      = 'preview_222336';
+    protected $primaryKey = 'id_222336';
     public $incrementing  = false;
     protected $keyType    = 'string';
 
     protected $fillable = [
-        'id_2222336',
-        'produk_id_2222336',
-        'user_id_2222336',
-        'komentar_2222336',
-        'rating_2222336',
-        'is_approved_2222336',
+        'id_222336',
+        'produk_id_222336',
+        'user_id_222336',
+        'komentar_222336',
+        'rating_222336',
+        'is_approved_222336',
     ];
 
     protected $casts = [
-        'is_approved_2222336' => 'boolean',
+        'is_approved_222336' => 'boolean',
     ];
 
     protected static function boot()
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->id_2222336 = IdGenerator::generateId(new Preview, 'PRV', 8);
+            $model->id_222336 = IdGenerator::generateId(new Preview, 'PRV', 8);
         });
     }
 
     public function produk()
     {
-        return $this->belongsTo(Produk::class, 'produk_id_2222336', 'id_2222336');
+        return $this->belongsTo(Produk::class, 'produk_id_222336', 'id_222336');
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id_2222336', 'id_2222336');
+        return $this->belongsTo(User::class, 'user_id_222336', 'id_222336');
     }
 }
