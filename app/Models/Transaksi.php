@@ -41,7 +41,7 @@ class Transaksi extends Model
 
     public function pelanggan()
     {
-        return $this->belongsTo(Users::class, 'id_pelanggan_222336', 'id_222336');
+        return $this->belongsTo(Users::class, 'id_pelanggan_222336', 'email_222336');
     }
 
     public function produk()

@@ -37,6 +37,6 @@ class PermintaanCustom extends Model
 
     public function user()
     {
-        return $this->belongsTo(Users::class, 'user_id_222336', 'id_222336');
+        return $this->belongsTo(Users::class, 'user_id_222336', 'email_222336');
     }
 }

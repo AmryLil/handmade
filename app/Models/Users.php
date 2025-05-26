@@ -15,12 +15,11 @@ class Users extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $table      = 'users_222336';
-    protected $primaryKey = 'id_222336';
+    protected $primaryKey = 'email_222336';
     public $incrementing  = false;
     protected $keyType    = 'string';
 
     protected $fillable = [
-        'id_222336',
         'email_222336',
         'name',
         'password_222336',
@@ -43,7 +42,7 @@ class Users extends Authenticatable
 
     public function getAuthIdentifierName()
     {
-        return 'id_222336';
+        return 'email_222336';
     }
 
     /**
@@ -56,32 +55,24 @@ class Users extends Authenticatable
         return $this->{$this->getAuthIdentifierName()};
     }
 
-    protected static function boot()
-    {
-        parent::boot();
-        self::creating(function ($model) {
-            $model->id_222336 = IdGenerator::generateId(new Users, 'USR', 8);
-        });
-    }
-
     public function cart()
     {
-        return $this->hasOne(Cart::class, 'user_id_222336', 'id_222336');
+        return $this->hasOne(Cart::class, 'user_id_222336', 'email_222336');
     }
 
     public function transaksi()
     {
-        return $this->hasMany(Transaksi::class, 'id_pelanggan_222336', 'id_222336');
+        return $this->hasMany(Transaksi::class, 'id_pelanggan_222336', 'email_222336');
     }
 
     public function reviews()
     {
-        return $this->hasMany(Preview::class, 'user_id_222336', 'id_222336');
+        return $this->hasMany(Preview::class, 'user_id_222336', 'email_222336');
     }
 
     public function permintaanCustom()
     {
-        return $this->hasMany(PermintaanCustom::class, 'user_id_222336', 'id_222336');
+        return $this->hasMany(PermintaanCustom::class, 'user_id_222336', 'email_222336');
     }
 
     public function canAccessPanel(Panel $panel): bool

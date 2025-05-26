@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::create('transaksi_222336', function (Blueprint $table) {
             $table->string('id_transaksi_222336', 20)->primary();
             $table->string('id_pelanggan_222336', 20);
-            $table->foreign('id_pelanggan_222336')->references('id_222336')->on('users_222336')->onDelete('cascade');
+            $table->foreign('id_pelanggan_222336')->references('email_222336')->on('users_222336')->onDelete('cascade');
             $table->string('id_produk_222336', 20);
             $table->foreign('id_produk_222336')->references('id_222336')->on('produk_222336')->onDelete('cascade');
             $table->integer('jumlah_222336');

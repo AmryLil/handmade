@@ -23,14 +23,6 @@ class KategoriProduk extends Model
         'tags_222336',
     ];
 
-    protected static function boot()
-    {
-        parent::boot();
-        self::creating(function ($model) {
-            $model->id_222336 = IdGenerator::generateId(new KategoriProduk, 'KTG', 8);
-        });
-    }
-
     public function produk()
     {
         return $this->hasMany(Produk::class, 'kategori_id_222336', 'id_222336');

@@ -39,6 +39,7 @@ class KategoriAdminController extends Controller
   public function store(Request $request)
   {
     $validator = Validator::make($request->all(), [
+      'id_222336'        => 'required|string|max:255',
       'nama_222336'      => 'required|string|max:255',
       'deskripsi_222336' => 'required|string',
       'path_img_222336'  => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',

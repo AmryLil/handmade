@@ -15,8 +15,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
         Users::firstOrCreate(
             ['email_222336' => 'admin123@gmail.com'],
             [
@@ -25,5 +23,8 @@ class DatabaseSeeder extends Seeder
                 'role_222336'     => 'admin',
             ]
         );
+        $this->call([
+            Kategori::class,
+        ]);
     }
 }

@@ -26,13 +26,19 @@
                             </ul>
                         </div>
                     @endif
-
+                    <div class="mb-6">
+                        <label for="id_222336" class="block text-sm font-medium text-gray-700 mb-1">Kode Kategori</label>
+                        <input type="text" name="id_222336" id="id_222336" value="{{ old('id_222336') }}"
+                            class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                            required>
+                    </div>
                     <div class="mb-6">
                         <label for="nama_222336" class="block text-sm font-medium text-gray-700 mb-1">Nama Kategori</label>
                         <input type="text" name="nama_222336" id="nama_222336" value="{{ old('nama_222336') }}"
                             class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                             required>
                     </div>
+
 
                     <div class="mb-6">
                         <label for="deskripsi_222336" class="block text-sm font-medium text-gray-700 mb-1">Deskripsi</label>

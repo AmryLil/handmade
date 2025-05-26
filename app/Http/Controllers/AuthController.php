@@ -53,7 +53,6 @@ class AuthController extends Controller
 
       // Store additional session data
       session([
-        'user_id'   => Auth::user()->id_222336,
         'user_role' => Auth::user()->role_222336,
         'email'     => Auth::user()->email_222336,
         'name'      => Auth::user()->name,
@@ -61,7 +60,6 @@ class AuthController extends Controller
 
       // Log success
       Log::info('Login successful for user:', [
-        'id'   => Auth::user()->id_222336,
         'role' => Auth::user()->role_222336
       ]);
 

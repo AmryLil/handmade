@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::create('permintaan_custom_222336', function (Blueprint $table) {
             $table->string('id_222336', 20)->primary();
             $table->string('user_id_222336', 20);
-            $table->foreign('user_id_222336')->references('id_222336')->on('users_222336')->onDelete('cascade');
+            $table->foreign('user_id_222336')->references('email_222336')->on('users_222336')->onDelete('cascade');
             $table->string('judul_222336');
             $table->text('deskripsi_222336');
             $table->string('path_img_222336')->nullable();

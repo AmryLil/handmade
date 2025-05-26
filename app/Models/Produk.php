@@ -38,14 +38,6 @@ class Produk extends Model
         return null;  // Or a default image placeholder
     }
 
-    protected static function boot()
-    {
-        parent::boot();
-        self::creating(function ($model) {
-            $model->id_222336 = IdGenerator::generateId(new Produk, 'PRD', 8);
-        });
-    }
-
     public function kategori()
     {
         return $this->belongsTo(KategoriProduk::class, 'kategori_id_222336', 'id_222336');

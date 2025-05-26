@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->string('produk_id_222336', 20);
             $table->foreign('produk_id_222336')->references('id_222336')->on('produk_222336')->onDelete('cascade');
             $table->string('user_id_222336', 20);
-            $table->foreign('user_id_222336')->references('id_222336')->on('users_222336')->onDelete('cascade');
+            $table->foreign('user_id_222336')->references('email_222336')->on('users_222336')->onDelete('cascade');
             $table->text('komentar_222336');
             $table->integer('rating_222336')->default(0);
             $table->boolean('is_approved_222336')->default(false);
