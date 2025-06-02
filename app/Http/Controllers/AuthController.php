@@ -30,6 +30,7 @@ class AuthController extends Controller
       [
         'email'    => ['required', 'email'],
         'password' => 'required|min:8|max:10',
+        'role'     => 'required|string|in:admin,customer',
       ],
       [
         'email.required'    => 'Email wajib diisi.',
@@ -37,16 +38,19 @@ class AuthController extends Controller
         'password.required' => 'Password wajib diisi.',
         'password.min'      => 'Password harus memiliki minimal 8 karakter.',
         'password.max'      => 'Password tidak boleh lebih dari 10 karakter.',
+        'role.required'     => 'Role wajib dipilih.',
+        'role.in'           => 'Role tidak valid.',
       ]
     );
 
     // Log attempt for debugging
-    Log::info('Attempting login for:', ['email' => $credentials['email']]);
+    Log::info('Attempting login for:', ['email' => $credentials['email'], 'role' => $credentials['role']]);
 
-    // Attempt login with custom column mapping
+    // Attempt login with custom column mapping including role
     if (Auth::attempt([
       'email_222336' => $credentials['email'],
-      'password'     => $credentials['password']  // Laravel will use getAuthPassword internally
+      'password'     => $credentials['password'],  // Laravel will use getAuthPassword internally
+      'role_222336'  => $credentials['role'],
     ])) {
       // Regenerate session for security
       $request->session()->regenerate();
@@ -74,7 +78,7 @@ class AuthController extends Controller
     }
 
     // Log failure
-    Log::info('Login failed for:', ['email' => $credentials['email']]);
+    Log::info('Login failed for:', ['email' => $credentials['email'], 'role' => $credentials['role']]);
 
     return back()->withErrors([
       'email' => 'Password dan email anda salah',
@@ -98,6 +102,7 @@ class AuthController extends Controller
       'name'       => 'required|string|max:255',
       'email'      => 'required|string|email|max:255|unique:users_222336,email_222336',
       'password'   => 'required|string|min:8|confirmed',
+      'role'       => 'required|string|in:admin,customer',
       // Kolom lainnya tidak required
       'gender'     => 'nullable|in:male,female',
       'phone'      => 'nullable|string|max:15',
@@ -113,10 +118,8 @@ class AuthController extends Controller
       'phone_222336'      => $request->phone,
       'address_222336'    => $request->address,
       'birth_date_222336' => $request->birth_date,
-      'role_222336'       => 'customer',
+      'role_222336'       => $request->role,
     ]);
-
-    Auth::login($user);
 
     return redirect('/login');
   }

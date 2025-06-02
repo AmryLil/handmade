@@ -108,14 +108,9 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 @forelse($newestProducts as $product)
                     <div class="bg-white rounded-lg shadow-md overflow-hidden transition duration-300 hover:shadow-xl">
-                        @if ($product->gambar->count() > 0)
-                            <img src="{{ $product->getImageUrlAttribute() }}" alt="{{ $product->nama_222336 }}"
-                                alt="{{ $product->nama_222336 }}" class="w-full h-56 object-cover">
-                        @else
-                            <div class="w-full h-56 bg-slate-200 flex items-center justify-center">
-                                <span class="text-slate-400">No Image</span>
-                            </div>
-                        @endif
+                        <img src="{{ $product->getImageUrlAttribute() }}" alt="{{ $product->nama_222336 }}"
+                            alt="{{ $product->nama_222336 }}" class="w-full h-56 object-cover">
+
                         <div class="p-6">
                             <h3 class="text-xl font-bold text-slate-900">{{ $product->nama_222336 }}</h3>
                             <div class="flex text-maroon-500 mt-1">

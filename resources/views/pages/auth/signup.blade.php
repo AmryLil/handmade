@@ -67,7 +67,7 @@
                     @endif
 
                     <!-- Form -->
-                    <form action="#" method="POST" class="space-y-4">
+                    <form action="{{ route('register.submit') }}" method="POST" class="space-y-4">
                         @csrf
                         <div class="flex flex-col space-y-4">
                             <!-- Full Name -->
@@ -125,6 +125,18 @@
                                     class="w-full border bg-slate-50 border-slate-200 rounded-lg p-3 pl-10 focus:ring-2 focus:ring-maroon-500 focus:border-maroon-500 focus:outline-none text-sm"
                                     type="password" name="password_confirmation" placeholder="Confirm Password"
                                     required />
+                            </div>
+
+                            <!-- Role Selection -->
+                            <div class="relative">
+                                <label for="role" class="block mb-1 text-sm font-medium text-slate-700">Select
+                                    Role</label>
+                                <select id="role" name="role" required
+                                    class="w-full border bg-slate-50 border-slate-200 rounded-lg p-3 focus:ring-2 focus:ring-maroon-500 focus:border-maroon-500 focus:outline-none text-sm">
+                                    <option value="" disabled selected>Select your role</option>
+                                    <option value="admin">Admin</option>
+                                    <option value="customer">Customer</option>
+                                </select>
                             </div>
                         </div>
 
