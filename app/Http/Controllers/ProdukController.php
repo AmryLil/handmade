@@ -36,13 +36,35 @@ class ProdukController extends Controller
   public function store(Request $request)
   {
     $validated = $request->validate([
-      'id_222336'          => 'required|string|max:255',
+      'id_222336'          => 'required|string|max:255|unique:produk_222336,id_222336',
       'nama_222336'        => 'required|string|max:255',
       'deskripsi_222336'   => 'required|string',
       'harga_222336'       => 'required|numeric|min:0',
       'kategori_id_222336' => 'required|exists:kategori_produk_222336,id_222336',
       'jumlah_222336'      => 'required|integer|min:0',
       'image'              => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ], [
+      'id_222336.required'          => 'ID produk wajib diisi.',
+      'id_222336.string'            => 'ID produk harus berupa teks.',
+      'id_222336.max'               => 'ID produk maksimal 255 karakter.',
+      'id_222336.unique'            => 'ID produk sudah digunakan.',
+      'nama_222336.required'        => 'Nama produk wajib diisi.',
+      'nama_222336.string'          => 'Nama produk harus berupa teks.',
+      'nama_222336.max'             => 'Nama produk maksimal 255 karakter.',
+      'deskripsi_222336.required'   => 'Deskripsi produk wajib diisi.',
+      'deskripsi_222336.string'     => 'Deskripsi produk harus berupa teks.',
+      'harga_222336.required'       => 'Harga produk wajib diisi.',
+      'harga_222336.numeric'        => 'Harga produk harus berupa angka.',
+      'harga_222336.min'            => 'Harga produk minimal 0.',
+      'kategori_id_222336.required' => 'Kategori produk wajib dipilih.',
+      'kategori_id_222336.exists'   => 'Kategori tidak ditemukan.',
+      'jumlah_222336.required'      => 'Jumlah produk wajib diisi.',
+      'jumlah_222336.integer'       => 'Jumlah produk harus berupa bilangan bulat.',
+      'jumlah_222336.min'           => 'Jumlah produk minimal 0.',
+      'image.required'              => 'Gambar produk wajib diunggah.',
+      'image.image'                 => 'File harus berupa gambar.',
+      'image.mimes'                 => 'Gambar harus berformat jpeg, png, jpg, atau gif.',
+      'image.max'                   => 'Ukuran gambar maksimal 2MB.',
     ]);
 
     if ($request->hasFile('image')) {

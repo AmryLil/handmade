@@ -30,7 +30,7 @@ class Cart extends Model
 
     public function user()
     {
-        return $this->belongsTo(Users::class, 'user_id_222336', 'email_222336');
+        return $this->belongsTo(Users::class, 'email_222336', 'user_id_222336');
     }
 
     public function items()

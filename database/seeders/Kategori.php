@@ -11,26 +11,31 @@ class Kategori extends Seeder
     {
         $data = [
             [
+                'id_222336'        => 'KTR-0001',
                 'nama_222336'      => 'Aksesori & Perhiasan',
                 'deskripsi_222336' => 'Kalung, gelang, cincin, dan kerajinan tangan perhiasan lainnya.',
                 'path_img_222336'  => 'kategori/aksesori.jpg',
             ],
             [
+                'id_222336'        => 'KTR-0002',
                 'nama_222336'      => 'Dekorasi Rumah',
                 'deskripsi_222336' => 'Produk dekorasi seperti macrame, lilin aromaterapi, dan hiasan dinding.',
                 'path_img_222336'  => 'kategori/dekorasi.jpg',
             ],
             [
+                'id_222336'        => 'KTR-0003',
                 'nama_222336'      => 'Pakaian & Tekstil',
                 'deskripsi_222336' => 'Baju rajut, tas handmade, syal, dan tekstil buatan tangan.',
                 'path_img_222336'  => 'kategori/pakaian.jpg',
             ],
             [
+                'id_222336'        => 'KTR-0004',
                 'nama_222336'      => 'Kerajinan Kayu',
                 'deskripsi_222336' => 'Rak mini, ukiran kayu, mainan kayu, dan peralatan dapur handmade.',
                 'path_img_222336'  => 'kategori/kayu.jpg',
             ],
             [
+                'id_222336'        => 'KTR-0005',
                 'nama_222336'      => 'Keramik & Tanah Liat',
                 'deskripsi_222336' => 'Mug, vas, patung mini dari tanah liat yang dibuat manual.',
                 'path_img_222336'  => 'kategori/keramik.jpg',
@@ -38,7 +43,7 @@ class Kategori extends Seeder
         ];
 
         foreach ($data as $item) {
-            KategoriProduk::create($item);  // ID akan dibuat otomatis di model
+            KategoriProduk::create($item);
         }
     }
 }

@@ -17,14 +17,14 @@
                     class="absolute bottom-0 left-0 w-full h-0.5 bg-maroon-600 transform {{ request()->routeIs('home') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100' }} transition-transform"></span>
             </a>
 
-            <a href="#"
+            <a href="{{ route('products.index') }}"
                 class="relative group px-4 py-2 {{ request()->routeIs('produk*') ? 'text-maroon-600 font-medium' : 'text-slate-700' }}">
                 Produk
                 <span
                     class="absolute bottom-0 left-0 w-full h-0.5 bg-maroon-600 transform {{ request()->routeIs('products.index*') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100' }} transition-transform"></span>
             </a>
 
-            <a href="#"
+            <a href="{{ route('kategori.index') }}"
                 class="relative group px-4 py-2 {{ request()->routeIs('kategori*') ? 'text-maroon-600 font-medium' : 'text-slate-700' }}">
                 Kategori
                 <span
@@ -53,7 +53,7 @@
 
         <!-- Cart icon with badge -->
         @if (Auth::check())
-            <a href="#" class="relative p-2 rounded-full hover:bg-slate-100 transition-colors">
+            <a href="{{ route('cart.index') }}" class="relative p-2 rounded-full hover:bg-slate-100 transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-600" fill="none"
                     viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -145,7 +145,7 @@
                             <span class="font-medium text-slate-700">Profile Saya</span>
                         </a>
 
-                        <a href="#"
+                        <a href="{{ route('transaksi.index') }}"
                             class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-slate-100 mb-1 {{ request()->routeIs('orders*') ? 'bg-slate-100' : '' }}">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-maroon-600" fill="none"
                                 viewBox="0 0 24 24" stroke="currentColor">

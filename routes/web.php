@@ -1,9 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminTransaksiController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\KategoriAdminController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProdukUserController;
+use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -12,9 +16,9 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/produk', function () {
 //     return view('pages/users/toko');
 // });
-Route::get('/produk/1', function () {
-    return view('pages/users/produk');
-});
+// Route::get('/produk/1', function () {
+//     return view('pages/users/produk');
+// });
 Route::get('/login', function () {
     return view('pages/auth/login');
 });
@@ -55,10 +59,33 @@ Route::prefix('produk')->group(function () {
     Route::get('/filter-by-price', [ProdukUserController::class, 'filterByPrice'])->name('products.filter.price');
 });
 
+Route::middleware('auth')->group(function () {
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+
+    Route::post('/cart/add', [CartController::class, 'addItem'])->name('cart.add');
+    Route::put('/cart/item/{itemId}', [CartController::class, 'updateItem']);
+    Route::delete('/cart/item/{itemId}', [CartController::class, 'removeItem']);
+    Route::delete('/cart/clear', [CartController::class, 'clearCart']);
+    Route::get('/cart/summary', [CartController::class, 'summary'])->name('cart.summary');
+    Route::get('/cart/check/{productId}', [CartController::class, 'checkProduct']);
+    Route::get('/cart/validate', [CartController::class, 'validateCart']);
+
+    Route::get('/transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
+    Route::post('/checkout', [TransaksiController::class, 'checkout'])->name('checkout');
+    Route::post('/transaksi/{id}/upload-bukti', [TransaksiController::class, 'uploadBukti'])->name('transaksi.uploadBukti');
+    Route::post('/transaksi/upload-batch', [TransaksiController::class, 'uploadBatch'])->name('transaksi.uploadBatch');
+
+    Route::post('/checkout/complete', [TransaksiController::class, 'completeCheckout'])->name('checkout.complete');
+});
+
 Route::prefix('admin')->name('admin.')->group(function () {
     // Produk routes
     Route::resource('produk', ProdukController::class);
     Route::resource('kategori_produk', KategoriAdminController::class);
+    Route::resource('users', UserController::class);
+    Route::get('/transaksi', [AdminTransaksiController::class, 'index'])->name('admin.transaksi.index');
+    Route::get('/transaksi/{id}', [AdminTransaksiController::class, 'show'])->name('admin.transaksi.show');
+    Route::put('/transaksi/{id}/status', [AdminTransaksiController::class, 'updateStatus'])->name('admin.transaksi.updateStatus');
 });
 
 // Search routes

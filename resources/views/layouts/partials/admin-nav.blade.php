@@ -27,6 +27,15 @@
             </svg>
             Kategori
         </a>
+        <a href="{{ route('admin.users.index') }}"
+            class="{{ request()->routeIs('admin.users.*') ? 'bg-red-700 text-white' : 'text-slate-950 hover:bg-red-700 hover:text-white' }} group flex items-center px-4 py-2 text-sm font-medium">
+            <svg class="mr-3 h-5 w-5 {{ request()->routeIs('admin.users.*') ? 'text-white' : 'text-slate-900 group-hover:text-white' }}"
+                viewBox="0 0 20 20" fill="currentColor">
+                <path
+                    d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" />
+            </svg>
+            Manajemen Users
+        </a>
 
     </div>
 
