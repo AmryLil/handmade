@@ -183,19 +183,19 @@
 
                 products.forEach(product => {
                     const productHtml = `
-                        <div class="flex items-center border-b pb-4">
-                            <div class="flex-shrink-0 w-16 h-16 bg-gray-200 rounded-lg overflow-hidden">
-                                <img src="${product.gambar}" alt="${product.nama}" class="w-full h-full object-cover">
-                            </div>
-                            <div class="ml-4 flex-1">
-                                <h5 class="font-medium text-gray-900">${product.nama}</h5>
-                                <div class="flex justify-between mt-1 text-sm">
-                                    <span>${product.jumlah} x Rp ${product.harga.toLocaleString('id-ID')}</span>
-                                    <span class="font-medium">Rp ${product.subtotal.toLocaleString('id-ID')}</span>
+                            <div class="flex items-center border-b pb-4">
+                                <div class="flex-shrink-0 w-16 h-16 bg-gray-200 rounded-lg overflow-hidden">
+                                    <img src="${product.gambar}" alt="${product.nama}" class="w-full h-full object-cover">
+                                </div>
+                                <div class="ml-4 flex-1">
+                                    <h5 class="font-medium text-gray-900">${product.nama}</h5>
+                                    <div class="flex justify-between mt-1 text-sm">
+                                        <span>${product.jumlah} x Rp ${product.harga.toLocaleString('id-ID')}</span>
+                                        <span class="font-medium">Rp ${product.subtotal.toLocaleString('id-ID')}</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    `;
+                        `;
                     productsContainer.innerHTML += productHtml;
                 });
 

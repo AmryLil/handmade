@@ -75,11 +75,6 @@ class Users extends Authenticatable
         return $this->hasMany(PermintaanCustom::class, 'user_id_222336', 'email_222336');
     }
 
-    public function canAccessPanel(Panel $panel): bool
-    {
-        return $this->role_222336 === 'admin';
-    }
-
     // For Filament avatar
     public function getFilamentAvatarUrl(): ?string
     {

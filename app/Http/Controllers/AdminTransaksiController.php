@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Transaksi;
 use Barryvdh\DomPDF\Facade\Pdf;  // Tambahkan ini
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class AdminTransaksiController extends Controller
@@ -60,14 +61,16 @@ class AdminTransaksiController extends Controller
         $startDate = $request->input('start_date');
         $endDate   = $request->input('end_date');
 
-        $transaksis = [];
+        // Selalu ambil data transaksi
+        $query = Transaksi::with(['pelanggan', 'produk']);
 
+        // Jika ada filter tanggal, terapkan filter
         if ($startDate && $endDate) {
-            $transaksis = Transaksi::with(['pelanggan', 'produk'])
-                ->whereBetween('tanggal_transaksi_222336', [$startDate, $endDate])
-                ->orderBy('tanggal_transaksi_222336', 'asc')
-                ->get();
+            $query->whereBetween('tanggal_transaksi_222336', [$startDate, $endDate]);
         }
+
+        // Ambil semua data dengan urutan tanggal terbaru
+        $transaksis = $query->orderBy('tanggal_transaksi_222336', 'desc')->get();
 
         return view('pages.admin.transaksi.laporan', compact('transaksis', 'startDate', 'endDate'));
     }
@@ -77,26 +80,38 @@ class AdminTransaksiController extends Controller
      */
     public function exportPdf(Request $request)
     {
+        // 1. Ubah validasi menjadi opsional (nullable)
         $request->validate([
-            'start_date' => 'required|date',
-            'end_date'   => 'required|date|after_or_equal:start_date',
+            'start_date' => 'nullable|date',
+            'end_date'   => 'nullable|date|after_or_equal:start_date',
         ]);
 
         $startDate = $request->input('start_date');
         $endDate   = $request->input('end_date');
 
-        $transaksis = Transaksi::with(['pelanggan', 'produk'])
-            ->whereBetween('tanggal_transaksi_222336', [$startDate, $endDate])
-            ->orderBy('tanggal_transaksi_222336', 'asc')
-            ->get();
+        // 2. Buat query dinamis menggunakan when()
+        $query = Transaksi::with(['pelanggan', 'produk']);
 
-        // Membuat PDF
+        // Terapkan filter hanya jika kedua tanggal diisi
+        $query->when($startDate && $endDate, function ($q) use ($startDate, $endDate) {
+            // Tambahkan waktu 23:59:59 ke tanggal akhir agar data di hari itu ikut terambil
+            $endOfDay = Carbon::parse($endDate)->endOfDay();
+            return $q->whereBetween('tanggal_transaksi_222336', [$startDate, $endOfDay]);
+        });
+
+        $transaksis = $query->orderBy('tanggal_transaksi_222336', 'asc')->get();
+
+        // 3. Buat nama file dinamis
+        if ($startDate && $endDate) {
+            $fileName = 'laporan-transaksi-' . $startDate . '-sampai-' . $endDate . '.pdf';
+        } else {
+            $fileName = 'laporan-transaksi-semua-periode-' . date('Y-m-d') . '.pdf';
+        }
+
+        // Load view dan data ke PDF
         $pdf = PDF::loadView('pages.admin.transaksi.pdf', compact('transaksis', 'startDate', 'endDate'));
 
-        // Mengatur nama file PDF yang akan diunduh
-        $fileName = 'laporan-transaksi-' . $startDate . '-sampai-' . $endDate . '.pdf';
-
-        // Mengunduh PDF
+        // Unduh PDF
         return $pdf->download($fileName);
     }
 }

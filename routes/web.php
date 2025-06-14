@@ -13,18 +13,17 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-// Route::get('/produk', function () {
-//     return view('pages/users/toko');
-// });
+
 // Route::get('/produk/1', function () {
 //     return view('pages/users/produk');
 // });
-Route::get('/login', function () {
-    return view('pages/auth/login');
-});
-Route::get('/signup', function () {
-    return view('pages/auth/signup');
-});
+
+Route::get('/kontak', function () {
+    return view('pages/users/kontak');
+})->name('kontak');
+Route::get('/tentang', function () {
+    return view('pages/users/about_us');
+})->name('tentang');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -78,7 +77,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/checkout/complete', [TransaksiController::class, 'completeCheckout'])->name('checkout.complete');
 });
 
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {
     // Produk routes
     Route::resource('produk', ProdukController::class);
     Route::resource('kategori_produk', KategoriAdminController::class);
@@ -89,8 +88,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::patch('/transaksi/{id}/update-status', [AdminTransaksiController::class, 'updateStatus'])->name('transaksi.updateStatus');
 
-    Route::get('/transaksi/laporan', [AdminTransaksiController::class, 'laporan'])->name('transaksi.laporan');
-    Route::get('/transaksi/export-pdf', [AdminTransaksiController::class, 'exportPdf'])->name('transaksi.exportPdf');
+    Route::get('/laporan', [AdminTransaksiController::class, 'laporan'])->name('laporan');
+    Route::get('/export-pdf', [AdminTransaksiController::class, 'exportPdf'])->name('transaksi.exportPdf');
+
+    Route::patch('/produk/{id}/ubah-stok', [ProdukController::class, 'ubahStok'])->name('produk.ubahStok');
 });
 
 // Search routes

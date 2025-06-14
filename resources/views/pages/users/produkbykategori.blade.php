@@ -28,8 +28,8 @@
                 <div class="md:flex">
                     <div class="md:flex-shrink-0">
                         @if ($kategori->path_img_222336)
-                            <img src="{{ asset($kategori->path_img_222336) }}" alt="{{ $kategori->nama_222336 }}"
-                                class="h-64 w-full object-cover md:w-64">
+                            <img src="{{ asset('storage/' . $kategori->path_img_222336) }}"
+                                alt="{{ $kategori->nama_222336 }}" class="h-64 w-full object-cover md:w-64">
                         @else
                             <div class="h-64 w-full md:w-64 bg-gray-100 flex items-center justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-gray-300" fill="none"

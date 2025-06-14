@@ -31,14 +31,14 @@
                     class="absolute bottom-0 left-0 w-full h-0.5 bg-maroon-600 transform {{ request()->routeIs('kategori*') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100' }} transition-transform"></span>
             </a>
 
-            <a href="#"
-                class="relative group px-4 py-2 {{ request()->routeIs('tentang-kami') ? 'text-maroon-600 font-medium' : 'text-slate-700' }}">
+            <a href="/tentang"
+                class="relative group px-4 py-2 {{ request()->routeIs('tentang') ? 'text-maroon-600 font-medium' : 'text-slate-700' }}">
                 Tentang Kami
                 <span
-                    class="absolute bottom-0 left-0 w-full h-0.5 bg-maroon-600 transform {{ request()->routeIs('tentang-kami') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100' }} transition-transform"></span>
+                    class="absolute bottom-0 left-0 w-full h-0.5 bg-maroon-600 transform {{ request()->routeIs('tentang') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100' }} transition-transform"></span>
             </a>
 
-            <a href="#"
+            <a href="/kontak"
                 class="relative group px-4 py-2 {{ request()->routeIs('kontak') ? 'text-maroon-600 font-medium' : 'text-slate-700' }}">
                 Kontak
                 <span

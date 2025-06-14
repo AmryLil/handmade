@@ -1,74 +1,70 @@
 @extends('layouts.admin')
 
+@section('title', 'Detail Kategori Produk')
+
 @section('content')
-    <div class="py-6">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center">
-                <h1 class="text-2xl font-semibold text-gray-900">Detail Kategori Produk</h1>
-                <a href="{{ route('admin.kategori_produk.index') }}"
-                    class="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500">
-                    Kembali
-                </a>
+    <div class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-8">
+        <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+            <!-- Header -->
+            <div class="mb-8">
+                <div class="flex items-center space-x-3 mb-2">
+                    <div class="w-8 h-8 bg-red-500 flex items-center justify-center rounded-lg">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                    </div>
+                    <h1 class="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+                        Detail Kategori Produk
+                    </h1>
+                </div>
+                <p class="text-gray-600 text-lg">Informasi lengkap tentang kategori produk</p>
             </div>
 
-            <div class="mt-6 bg-white shadow overflow-hidden rounded-lg">
-                <div class="px-4 py-5 sm:px-6">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900">
-                        {{ $kategori->nama_222336 }}
-                    </h3>
+            <!-- Content Card -->
+            <div class="bg-white/70 backdrop-blur-sm shadow-2xl rounded-3xl border border-white/20 overflow-hidden">
+                <div class="bg-gradient-to-r from-red-600 to-red-700 p-6 rounded-t-3xl">
+                    <h2 class="text-xl font-semibold text-white">Detail Kategori</h2>
                     @if ($kategori->tags_222336)
-                        <div class="mt-1 max-w-2xl text-sm text-gray-500">
-                            Tags: {{ $kategori->tags_222336 }}
-                        </div>
+                        <p class="text-blue-100 mt-1">Tags: {{ $kategori->tags_222336 }}</p>
                     @endif
                 </div>
 
-                <div class="border-t border-gray-200">
-                    <dl>
-                        <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-sm font-medium text-gray-500">
-                                Gambar
-                            </dt>
-                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                @if ($kategori->path_img_222336)
-                                    <div class="flex items-center">
-                                        <div class="flex-shrink-0 h-48 w-48">
-                                            <img class="h-48 w-48 object-cover rounded-md"
-                                                src="{{ Storage::url($kategori->path_img_222336) }}"
-                                                alt="{{ $kategori->nama_222336 }}">
-                                        </div>
-                                    </div>
-                                @else
-                                    <span class="text-gray-500">Tidak ada gambar</span>
-                                @endif
-                            </dd>
+                <div class="p-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="col-span-1">
+                            @if ($kategori->path_img_222336)
+                                <img src="{{ Storage::url($kategori->path_img_222336) }}" alt="{{ $kategori->nama_222336 }}"
+                                    class="w-full h-64 object-cover rounded-xl shadow-lg">
+                            @else
+                                <div
+                                    class="w-full h-64 bg-gray-100 rounded-xl flex items-center justify-center border-2 border-dashed border-gray-300">
+                                    <i class="fas fa-image text-gray-400 text-6xl"></i>
+                                </div>
+                            @endif
                         </div>
+                        <div class="col-span-2 space-y-6">
+                            <h3 class="text-2xl font-bold text-gray-900">{{ $kategori->nama_222336 }}</h3>
+                            <p class="text-gray-700 text-lg leading-relaxed">{{ $kategori->deskripsi_222336 }}</p>
 
-                        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-sm font-medium text-gray-500">
-                                Deskripsi
-                            </dt>
-                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                {{ $kategori->deskripsi_222336 }}
-                            </dd>
+                            <div class="flex space-x-4">
+                                <a href="{{ route('admin.kategori_produk.edit', $kategori->id_222336) }}"
+                                    class="inline-flex items-center px-6 py-3 bg-indigo-600 border border-transparent rounded-xl font-semibold text-white uppercase tracking-wider hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition">
+                                    <i class="fas fa-edit mr-2"></i> Edit
+                                </a>
+                                <form action="{{ route('admin.kategori_produk.destroy', $kategori->id_222336) }}"
+                                    method="POST"
+                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus kategori ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="inline-flex items-center px-6 py-3 bg-red-600 border border-transparent rounded-xl font-semibold text-white uppercase tracking-wider hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition">
+                                        <i class="fas fa-trash mr-2"></i> Hapus
+                                    </button>
+                                </form>
+                            </div>
                         </div>
-                    </dl>
-                </div>
-
-                <div class="px-4 py-4 sm:px-6 flex justify-end space-x-3">
-                    <a href="{{ route('admin.kategori_produk.edit', $kategori->id_222336) }}"
-                        class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 focus:outline-none focus:border-indigo-700 focus:ring focus:ring-indigo-200 active:bg-indigo-700 transition">
-                        Edit
-                    </a>
-                    <form action="{{ route('admin.kategori_produk.destroy', $kategori->id_222336) }}" method="POST"
-                        class="inline">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" onclick="return confirm('Apakah Anda yakin ingin menghapus kategori ini?')"
-                            class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 active:bg-red-700 transition">
-                            Hapus
-                        </button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

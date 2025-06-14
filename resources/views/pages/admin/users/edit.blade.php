@@ -3,90 +3,95 @@
 @section('title', 'Edit User')
 
 @section('content')
-    <div class="py-6">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="mb-6">
+    <div class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-8">
+        <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+            <!-- Header -->
+            <div class="mb-8">
                 <a href="{{ route('admin.users.index') }}"
-                    class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-md shadow-sm transition duration-150 ease-in-out">
+                    class="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl border border-gray-300 shadow-sm transition duration-150 ease-in-out">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
                     Kembali
                 </a>
             </div>
-            <div class="bg-white shadow-md rounded-lg overflow-hidden">
-                <div class="px-4 py-5 sm:p-6">
-                    <h3 class="text-lg font-medium leading-6 text-gray-900">Edit User</h3>
-                    <div class="mt-2 max-w-xl text-sm text-gray-500">
-                        <p>Form untuk mengedit user.</p>
-                    </div>
-                    <form action="{{ route('admin.users.update', $user) }}" method="POST" class="mt-5 space-y-6">
-                        @csrf
-                        @method('PUT')
 
-                        {{-- Nama --}}
-                        <div>
-                            <label for="name" class="block text-sm font-medium text-gray-700">Nama</label>
-                            <div class="mt-1">
-                                <input id="name" name="name" type="text" value="{{ old('name', $user->name) }}"
-                                    class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                                    required>
-                                @error('name')
-                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                @enderror
-                            </div>
-                        </div>
-
-                        {{-- Email --}}
-                        <div>
-                            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                            <div class="mt-1">
-                                <input id="email" name="email" type="email"
-                                    value="{{ old('email', $user->email_222336) }}"
-                                    class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                                    required>
-                                @error('email')
-                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                @enderror
-                            </div>
-                        </div>
-
-                        {{-- Role --}}
-                        <div class="relative">
-                            <label for="role" class="block mb-1 text-sm font-medium text-slate-700">Select Role</label>
-                            <select id="role" name="role" required
-                                class="w-full border bg-slate-50 border-slate-200 rounded-lg p-3 focus:ring-2 focus:ring-maroon-500 focus:border-maroon-500 focus:outline-none text-sm">
-                                <option value="" disabled>Select your role</option>
-                                <option value="admin" {{ old('role', $user->role_222336) === 'admin' ? 'selected' : '' }}>
-                                    Admin</option>
-                                <option value="customer"
-                                    {{ old('role', $user->role_222336) === 'customer' ? 'selected' : '' }}>
-                                    Customer</option>
-                            </select>
-                            @error('role')
-                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        {{-- Password (opsional) --}}
-                        <div>
-                            <label for="password" class="block text-sm font-medium text-gray-700">Password
-                                (kosongkan jika tidak ingin mengubah)</label>
-                            <div class="mt-1">
-                                <input id="password" name="password" type="password"
-                                    class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
-                                @error('password')
-                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                @enderror
-                            </div>
-                        </div>
-
-                        {{-- Tombol Submit --}}
-                        <div>
-                            <button type="submit"
-                                class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                Update
-                            </button>
-                        </div>
-                    </form>
+            <!-- Form Card -->
+            <div class="bg-white/70 backdrop-blur-sm shadow-2xl rounded-3xl border border-white/20 overflow-hidden">
+                <div class="bg-gradient-to-r from-red-600 to-red-700 p-6 rounded-t-3xl">
+                    <h2 class="text-xl font-semibold text-white">Edit User</h2>
+                    <p class="text-blue-100 mt-1">Form untuk mengedit user dengan mudah dan cepat</p>
                 </div>
+
+                <form action="{{ route('admin.users.update', $user) }}" method="POST" class="p-8 space-y-6">
+                    @csrf
+                    @method('PUT')
+
+                    {{-- Nama --}}
+                    <div class="group">
+                        <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">Nama
+                            <span class="text-red-500">*</span>
+                        </label>
+                        <input id="name" name="name" type="text" value="{{ old('name', $user->name) }}" required
+                            class="w-full px-4 py-3 bg-gray-50 border-2 border-transparent rounded-xl focus:border-blue-500 focus:bg-white focus:outline-none text-gray-900 placeholder-gray-400"
+                            placeholder="Masukkan nama lengkap">
+                        @error('name')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Email --}}
+                    <div class="group">
+                        <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email
+                            <span class="text-red-500">*</span>
+                        </label>
+                        <input id="email" name="email" type="email" value="{{ old('email', $user->email_222336) }}"
+                            required
+                            class="w-full px-4 py-3 bg-gray-50 border-2 border-transparent rounded-xl focus:border-blue-500 focus:bg-white focus:outline-none text-gray-900 placeholder-gray-400"
+                            placeholder="Masukkan alamat email">
+                        @error('email')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Role --}}
+                    <div class="group">
+                        <label for="role" class="block text-sm font-semibold text-gray-700 mb-2">Role
+                            <span class="text-red-500">*</span>
+                        </label>
+                        <select id="role" name="role" required
+                            class="w-full border bg-gray-50 border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-red-600 focus:border-red-600 focus:outline-none text-sm">
+                            <option value="" disabled>Select your role</option>
+                            <option value="admin" {{ old('role', $user->role_222336) === 'admin' ? 'selected' : '' }}>
+                                Admin</option>
+                            <option value="customer" {{ old('role', $user->role_222336) === 'customer' ? 'selected' : '' }}>
+                                Customer</option>
+                        </select>
+                        @error('role')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Password (opsional) --}}
+                    <div class="group">
+                        <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">Password
+                            (kosongkan jika tidak ingin mengubah)</label>
+                        <input id="password" name="password" type="password"
+                            class="w-full px-4 py-3 bg-gray-50 border-2 border-transparent rounded-xl focus:border-blue-500 focus:bg-white focus:outline-none text-gray-900 placeholder-gray-400"
+                            placeholder="Kosongkan jika tidak ingin mengubah password">
+                        @error('password')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Tombol Submit --}}
+                    <div class="flex justify-end space-x-4 pt-6 border-t border-gray-200">
+                        <button type="submit"
+                            class="px-8 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-xl shadow-lg">
+                            Perbarui User
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

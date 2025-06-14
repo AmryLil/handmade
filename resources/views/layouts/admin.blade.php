@@ -144,7 +144,7 @@
                         </a>
 
                         <!-- Reports -->
-                        <a href="#"
+                        <a href="{{ route('admin.laporan') }}"
                             class="nav-item group flex items-center px-4 py-3 text-sm font-semibold text-slate-300 hover:text-white hover:bg-slate-700/50 rounded-xl">
                             <div class="mr-4 p-2 bg-slate-700 rounded-lg group-hover:bg-red-600">
                                 <svg class="h-5 w-5 text-slate-300 group-hover:text-white" viewBox="0 0 20 20"
@@ -189,7 +189,7 @@
         </div>
 
         <!-- Static sidebar for desktop -->
-        <div class="hidden lg:flex lg:flex-shrink-0">
+        <div class="hidden fixed lg:flex lg:flex-shrink-0 z-20">
             <div class="flex w-72 flex-col">
                 <div class="flex flex-1 flex-col min-h-screen sidebar-gradient shadow-2xl">
                     <!-- Logo Section -->
@@ -267,7 +267,7 @@
                             </a>
 
                             <!-- Reports -->
-                            <a href="#"
+                            <a href="{{ route('admin.laporan') }}"
                                 class="nav-item group flex items-center px-4 py-3 text-sm font-semibold text-slate-300 hover:text-white hover:bg-slate-700/50 rounded-xl">
                                 <div class="mr-4 p-2 bg-slate-700 rounded-lg group-hover:bg-red-600">
                                     <svg class="h-5 w-5 text-slate-300 group-hover:text-white" viewBox="0 0 20 20"
@@ -310,7 +310,8 @@
         <!-- Main content -->
         <div class="flex flex-1 flex-col">
             <!-- Top bar -->
-            <div class="flex-shrink-0 bg-white border-b border-gray-200 shadow-sm">
+            <div
+                class="flex-shrink-0 bg-white border-b border-gray-200 shadow-sm fixed justify-end min-w-max w-full z-10">
                 <div class="flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
                     <!-- Mobile menu button -->
                     <button @click="sidebarOpen = !sidebarOpen" type="button"
@@ -327,7 +328,7 @@
                     </div>
 
                     <!-- Header actions -->
-                    <div class="flex items-center">
+                    <div class="flex items-center ">
                         <!-- User dropdown -->
                         <div x-data="{ userMenuOpen: false }" class="ml-4 relative">
                             <button @click="userMenuOpen = !userMenuOpen" type="button"
@@ -350,6 +351,10 @@
 
                                 <div class="border-t border-gray-100 my-1"></div>
                                 <form method="POST" action="{{ route('logout') }}">
+
+                                    {{-- TAMBAHKAN BARIS INI --}}
+                                    @csrf
+
                                     <button type="submit"
                                         class="flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-600">
                                         <svg class="mr-3 h-4 w-4" fill="none" stroke="currentColor"
@@ -369,7 +374,7 @@
 
             <!-- Main content area -->
             <main class="flex-1 p-6">
-                <div class="max-w-7xl mx-auto">
+                <div class="max-w-7xl mx-auto lg:ml-[270px] pt-10">
                     @yield('content')
                 </div>
             </main>

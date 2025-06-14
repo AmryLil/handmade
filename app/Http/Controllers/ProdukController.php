@@ -89,6 +89,60 @@ class ProdukController extends Controller
     return view('pages.admin.produk.show', compact('produk'));
   }
 
+  public function ubahStok(Request $request, $id)
+  {
+    // 1. Validasi input baru
+    $request->validate([
+      'operation_type' => 'required|in:add,set',  // Pastikan tipenya 'add' atau 'set'
+      'amount'         => 'required|integer',  // Jumlah yang diinput, bisa positif/negatif
+    ], [
+      'operation_type.in' => 'Pilih tipe aksi yang valid.',
+      'amount.required'   => 'Jumlah wajib diisi.',
+      'amount.integer'    => 'Jumlah harus berupa angka.',
+    ]);
+
+    try {
+      $produk    = Produk::findOrFail($id);
+      $stockLama = $produk->jumlah_222336;
+      $amount    = (int) $request->amount;
+
+      // 2. Logika berdasarkan tipe operasi
+      if ($request->operation_type === 'add') {
+        // Jika menambah/mengurangi, kalkulasi dari stok lama
+        $newStock              = $stockLama + $amount;
+        $produk->jumlah_222336 = $newStock;
+      } elseif ($request->operation_type === 'set') {
+        // Jika atur baru, langsung set nilainya
+        // Tambahkan proteksi agar tidak bisa set ke nilai negatif
+        if ($amount < 0) {
+          return redirect()->back()->with('error', 'Stok baru tidak boleh bernilai negatif.');
+        }
+        $produk->jumlah_222336 = $amount;
+      }
+
+      // Pastikan stok akhir tidak negatif
+      if ($produk->jumlah_222336 < 0) {
+        $produk->jumlah_222336 = 0;  // Set ke 0 jika hasil akhir negatif
+      }
+
+      $produk->save();
+
+      // 3. Pesan sukses (logika pesan ini sudah bagus dan tetap bisa dipakai)
+      $stockBaru = $produk->jumlah_222336;
+      if ($stockBaru > $stockLama) {
+        $message = "Stok produk '{$produk->nama_222336}' berhasil ditambah dari {$stockLama} menjadi {$stockBaru}";
+      } elseif ($stockBaru < $stockLama) {
+        $message = "Stok produk '{$produk->nama_222336}' berhasil dikurangi dari {$stockLama} menjadi {$stockBaru}";
+      } else {
+        $message = "Stok produk '{$produk->nama_222336}' tidak berubah, tetap {$stockBaru}";
+      }
+
+      return redirect()->route('admin.produk.index')->with('success', $message);
+    } catch (\Exception $e) {
+      return redirect()->route('admin.produk.index')->with('error', 'Gagal mengubah stok produk.');
+    }
+  }
+
   /**
    * Show the form for editing the specified product.
    */
