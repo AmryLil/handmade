@@ -7,8 +7,7 @@
     <section class="relative h-full pt-3">
         <div class="h-[500px] w-full overflow-hidden bg-slate-50">
             <div class="absolute inset-0 bg-gradient-to-r from-maroon-900/70 to-transparent z-10"></div>
-            <img src="https://img.freepik.com/free-photo/macrame-arrangement-with-copy-space_23-2149072887.jpg?t=st=1746472154~exp=1746475754~hmac=298358705df63ba5efb9887d127e78a7b3116e0838cf59404b4b626442f6f969&w=1800"
-                alt="Handmade Crafts Collection" class="w-full h-full object-cover">
+            <img src="{{ asset('images/banner.jpg') }}" alt="Handmade Crafts Collection" class="w-full h-full object-cover">
             <div class="absolute inset-0 flex items-center z-20">
                 <div class="container mx-auto px-6">
                     <div class="max-w-lg">
@@ -198,13 +197,13 @@
     </section>
 
     <!-- Custom Order Section -->
-    <section class="py-12">
+    {{-- <section class="py-12">
         <div class="container mx-auto px-6">
             <div class="bg-slate-800 rounded-lg shadow-xl overflow-hidden">
                 <div class="md:flex justify-center items-center">
                     <div class="md:w-1/2">
-                        <img src="https://img.freepik.com/free-photo/top-view-woman-creating-vision-board_23-2150061856.jpg?t=st=1746472383~exp=1746475983~hmac=9ea84566e1e476f133543d337165901d37829e532c742b4acec24814cd1743dd&w=1380"
-                            alt="Custom Order" class="w-full h-[410px] object-cover">
+                        <img src="{{ asset('images/custom.jpg') }}" alt="Custom Order"
+                            class="w-full h-[410px] object-cover">
                     </div>
                     <div class="md:w-1/2 p-8 md:p-12 flex items-center">
                         <div>
@@ -252,7 +251,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
 
 
