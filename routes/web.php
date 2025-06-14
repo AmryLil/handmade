@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminTransaksiController;
+use App\Http\Controllers\AdminTransaksiController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\KategoriAdminController;
@@ -83,9 +83,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('produk', ProdukController::class);
     Route::resource('kategori_produk', KategoriAdminController::class);
     Route::resource('users', UserController::class);
-    Route::get('/transaksi', [AdminTransaksiController::class, 'index'])->name('admin.transaksi.index');
-    Route::get('/transaksi/{id}', [AdminTransaksiController::class, 'show'])->name('admin.transaksi.show');
+    Route::get('/transaksi', [AdminTransaksiController::class, 'index'])->name('transaksi.index');
+    Route::get('/transaksi/{id}', [AdminTransaksiController::class, 'show'])->name('transaksi.show');
     Route::put('/transaksi/{id}/status', [AdminTransaksiController::class, 'updateStatus'])->name('admin.transaksi.updateStatus');
+
+    Route::patch('/transaksi/{id}/update-status', [AdminTransaksiController::class, 'updateStatus'])->name('transaksi.updateStatus');
+
+    Route::get('/transaksi/laporan', [AdminTransaksiController::class, 'laporan'])->name('transaksi.laporan');
+    Route::get('/transaksi/export-pdf', [AdminTransaksiController::class, 'exportPdf'])->name('transaksi.exportPdf');
 });
 
 // Search routes
