@@ -43,23 +43,23 @@
 
                                 <div class="flex items-center mx-4">
                                     <button
-                                        onclick="updateQuantity({{ $item->id_222336 }}, {{ $item->quantity_222336 - 1 }})"
-                                        class="bg-gray-200 px-2 py-1 rounded-l"
+                                        onclick="updateQuantity('{{ $item->id_222336 }}', {{ $item->quantity_222336 - 1 }})"
+                                        class="bg-gray-200 px-2 py-1 rounded-l disabled:opacity-50"
                                         {{ $item->quantity_222336 <= 1 ? 'disabled' : '' }}>-</button>
-                                    <input type="number" value="{{ $item->quantity_222336 }}"
+                                    <input value="{{ $item->quantity_222336 }}"
                                         class="w-16 text-center border-t border-b py-1" min="1"
                                         max="{{ $item->product->jumlah_222336 }}"
                                         onchange="updateQuantity({{ $item->id_222336 }}, this.value)">
                                     <button
-                                        onclick="updateQuantity({{ $item->id_222336 }}, {{ $item->quantity_222336 + 1 }})"
-                                        class="bg-gray-200 px-2 py-1 rounded-r"
+                                        onclick="updateQuantity('{{ $item->id_222336 }}', {{ $item->quantity_222336 + 1 }})"
+                                        class="bg-gray-200 px-2 py-1 rounded-r disabled:opacity-50"
                                         {{ $item->quantity_222336 >= $item->product->jumlah_222336 ? 'disabled' : '' }}>+</button>
                                 </div>
 
                                 <div class="text-right">
                                     <p class="font-semibold">Rp
                                         {{ number_format($item->quantity_222336 * $item->price_222336, 0, ',', '.') }}</p>
-                                    <button onclick="removeItem({{ $item->id_222336 }})"
+                                    <button onclick="removeItem('{{ $item->id_222336 }}')"
                                         class="text-red-600 text-sm hover:underline">Hapus</button>
                                 </div>
                             </div>
@@ -99,12 +99,14 @@
                     <button onclick="clearCart()"
                         class="w-full bg-red-600 text-white py-2 rounded hover:bg-red-700">Kosongkan Keranjang</button>
                 @else
-                    <button disabled class="w-full bg-gray-400 text-white py-2 rounded">Keranjang Kosong</button>
+                    <button disabled class="w-full bg-gray-400 text-white py-2 rounded cursor-not-allowed">Keranjang
+                        Kosong</button>
                 @endif
             </div>
         </div>
     </div>
 
+    {{-- Payment Modal --}}
     <div id="payment-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center p-4 z-50">
         <div class="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-auto">
             <form id="payment-form" enctype="multipart/form-data">
@@ -127,8 +129,6 @@
                         </div>
                         <div>
                             <h4 class="font-semibold mb-3">Scan QRIS & Upload Bukti Transfer:</h4>
-
-                            <!-- Gambar QRIS -->
                             <div class="mb-4">
                                 <label class="block text-sm font-medium text-gray-700 mb-1">QRIS Pembayaran</label>
                                 <div class="border rounded p-2 flex justify-center">
@@ -136,8 +136,6 @@
                                         class="max-h-52 object-contain">
                                 </div>
                             </div>
-
-                            <!-- Upload Bukti Transfer -->
                             <div class="mb-4">
                                 <label for="bukti_tf" class="block text-sm font-medium text-gray-700 mb-1">File Bukti
                                     Transfer</label>
@@ -155,8 +153,8 @@
         </div>
     </div>
 
-
-    <div id="loading" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+    {{-- Loading Spinner --}}
+    <div id="loading" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
         <div class="bg-white p-4 rounded-lg shadow-lg flex items-center">
             <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
             <p class="ml-3">Memproses...</p>
@@ -164,6 +162,7 @@
     </div>
 
     <script>
+        // Pastikan CSRF Token tersedia
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
         function showPaymentModal() {
@@ -197,6 +196,13 @@
 
             totalElement.textContent = document.getElementById('summary-total').textContent;
             modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeModal() {
+            document.getElementById('payment-modal').classList.add('hidden');
+            document.getElementById('payment-modal').classList.remove('flex');
+
         }
 
         document.getElementById('payment-form').addEventListener('submit', function(e) {
@@ -213,7 +219,6 @@
                     body: formData
                 })
                 .then(response => {
-                    hideLoading();
                     if (!response.ok) {
                         return response.json().then(err => {
                             throw err;
@@ -222,7 +227,8 @@
                     return response.json();
                 })
                 .then(data => {
-                    if (data.success) {
+                    hideLoading();
+                    if (data.redirect_url) {
                         alert('Checkout berhasil! Anda akan diarahkan ke halaman transaksi.');
                         window.location.href = data.redirect_url;
                     }
@@ -231,9 +237,9 @@
                     hideLoading();
                     console.error('Checkout Error:', error);
                     let errorMessage = 'Gagal memproses pembayaran.';
-                    if (error.error) { // Error dari throw \Exception di controller
+                    if (error.error) {
                         errorMessage += `\n\nPesan: ${error.error}`;
-                    } else if (error.errors) { // Error validasi dari Laravel
+                    } else if (error.errors) {
                         const firstError = Object.values(error.errors)[0][0];
                         errorMessage += `\n\nPesan: ${firstError}`;
                     }
@@ -241,73 +247,78 @@
                 });
         });
 
-        function closeModal() {
-            document.getElementById('payment-modal').classList.add('hidden');
-        }
-
         function showLoading() {
             document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('loading').classList.add('flex');
         }
 
         function hideLoading() {
             document.getElementById('loading').classList.add('hidden');
+            document.getElementById('loading').classList.remove('flex');
         }
 
         function numberFormat(number) {
             return new Intl.NumberFormat('id-ID').format(number);
         }
 
+        // --- FUNGSI YANG DIPERBAIKI ---
         function updateQuantity(itemId, newQuantity) {
             if (newQuantity < 1) return;
             showLoading();
-            fetch(`/cart/update/${itemId}`, {
+
+            fetch(`/cart/item/${itemId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': csrfToken
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Accept': 'application/json'
                 },
                 body: JSON.stringify({
                     quantity: parseInt(newQuantity)
                 })
             }).then(res => res.json()).then(data => {
-                if (data.success) {
+                // [FIXED] Check 'message' from controller, not 'success'
+                if (data.message) {
                     location.reload();
                 } else {
                     hideLoading();
-                    alert(data.error || 'Gagal update');
-                    location.reload();
+                    // [FIXED] Don't reload on error, show message instead
+                    alert(data.error || 'Gagal memperbarui kuantitas produk.');
                 }
             }).catch(err => {
                 hideLoading();
-                alert('Error: ' + err);
+                alert('Terjadi kesalahan: ' + err);
             });
         }
 
         function removeItem(itemId) {
-            if (!confirm('Hapus item ini?')) return;
+            if (!confirm('Anda yakin ingin menghapus item ini dari keranjang?')) return;
             showLoading();
-            fetch(`/cart/remove/${itemId}`, {
+
+            fetch(`/cart/item/${itemId}`, {
                 method: 'DELETE',
                 headers: {
                     'X-CSRF-TOKEN': csrfToken,
                     'Accept': 'application/json'
                 }
             }).then(res => res.json()).then(data => {
-                if (data.success) {
+                // [FIXED] Check 'message' from controller, not 'success'
+                if (data.message) {
                     location.reload();
                 } else {
                     hideLoading();
-                    alert(data.error || 'Gagal hapus');
+                    alert(data.error || 'Gagal menghapus item.');
                 }
             }).catch(err => {
                 hideLoading();
-                alert('Error: ' + err);
+                alert('Terjadi kesalahan: ' + err);
             });
         }
 
         function clearCart() {
-            if (!confirm('Kosongkan semua keranjang?')) return;
+            if (!confirm('Anda yakin ingin mengosongkan seluruh keranjang belanja?')) return;
             showLoading();
+
             fetch('/cart/clear', {
                 method: 'DELETE',
                 headers: {
@@ -315,15 +326,16 @@
                     'Accept': 'application/json'
                 }
             }).then(res => res.json()).then(data => {
-                if (data.success) {
+                // [FIXED] Check 'message' from controller, not 'success'
+                if (data.message) {
                     location.reload();
                 } else {
                     hideLoading();
-                    alert(data.error || 'Gagal kosongkan');
+                    alert(data.error || 'Gagal mengosongkan keranjang.');
                 }
             }).catch(err => {
                 hideLoading();
-                alert('Error: ' + err);
+                alert('Terjadi kesalahan: ' + err);
             });
         }
     </script>
