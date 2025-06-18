@@ -7,6 +7,7 @@ use App\Models\Transaksi;
 use Barryvdh\DomPDF\Facade\Pdf;  // Tambahkan ini
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminTransaksiController extends Controller
 {
@@ -54,25 +55,93 @@ class AdminTransaksiController extends Controller
     public function laporan(Request $request)
     {
         $request->validate([
-            'start_date' => 'nullable|date',
-            'end_date'   => 'nullable|date|after_or_equal:start_date',
+            'start_date'  => 'nullable|date',
+            'end_date'    => 'nullable|date|after_or_equal:start_date',
+            'filter_type' => 'nullable|string|in:harian,mingguan,bulanan,tahunan',  // Validasi filter baru
         ]);
 
-        $startDate = $request->input('start_date');
-        $endDate   = $request->input('end_date');
+        $startDate  = $request->input('start_date');
+        $endDate    = $request->input('end_date');
+        $filterType = $request->input('filter_type');
 
-        // Selalu ambil data transaksi
-        $query = Transaksi::with(['pelanggan', 'produk']);
-
-        // Jika ada filter tanggal, terapkan filter
-        if ($startDate && $endDate) {
-            $query->whereBetween('tanggal_transaksi_222336', [$startDate, $endDate]);
+        // Logika untuk filter cepat (harian, mingguan, bulanan, tahunan)
+        if ($filterType) {
+            switch ($filterType) {
+                case 'harian':
+                    $startDate = Carbon::today()->startOfDay();
+                    $endDate   = Carbon::today()->endOfDay();
+                    break;
+                case 'mingguan':
+                    $startDate = Carbon::now()->startOfWeek();
+                    $endDate   = Carbon::now()->endOfWeek();
+                    break;
+                case 'bulanan':
+                    $startDate = Carbon::now()->startOfMonth();
+                    $endDate   = Carbon::now()->endOfMonth();
+                    break;
+                case 'tahunan':
+                    $startDate = Carbon::now()->startOfYear();
+                    $endDate   = Carbon::now()->endOfYear();
+                    break;
+            }
         }
 
-        // Ambil semua data dengan urutan tanggal terbaru
-        $transaksis = $query->orderBy('tanggal_transaksi_222336', 'desc')->get();
+        // Query dasar untuk transaksi
+        $query = Transaksi::query();
 
-        return view('pages.admin.transaksi.laporan', compact('transaksis', 'startDate', 'endDate'));
+        // Terapkan filter tanggal jika ada
+        if ($startDate && $endDate) {
+            // Pastikan endDate mencakup keseluruhan hari
+            $endDateCarbon = Carbon::parse($endDate)->endOfDay();
+            $query->whereBetween('tanggal_transaksi_222336', [$startDate, $endDateCarbon]);
+        }
+
+        // --- STATISTIK TAMBAHAN ---
+
+        // 1. Ambil 3 Produk Terlaris berdasarkan jumlah item terjual
+        $produkTerlaris = Transaksi::select(
+            'id_produk_222336',
+            DB::raw('SUM(jumlah_222336) as total_terjual')
+        )
+            ->when($startDate && $endDate, function ($q) use ($startDate, $endDate) {
+                // Terapkan filter tanggal yang sama untuk statistik ini
+                return $q->whereBetween('tanggal_transaksi_222336', [$startDate, Carbon::parse($endDate)->endOfDay()]);
+            })
+            ->groupBy('id_produk_222336')
+            ->orderByDesc('total_terjual')
+            ->limit(3)
+            ->with('produk')  // Eager load relasi produk untuk mendapatkan nama
+            ->get();
+
+        // 2. Ambil User yang Paling Sering Transaksi
+        $userTeratas = Transaksi::select(
+            'id_pelanggan_222336',
+            DB::raw('COUNT(*) as jumlah_transaksi')
+        )
+            ->when($startDate && $endDate, function ($q) use ($startDate, $endDate) {
+                // Terapkan filter tanggal yang sama untuk statistik ini
+                return $q->whereBetween('tanggal_transaksi_222336', [$startDate, Carbon::parse($endDate)->endOfDay()]);
+            })
+            ->groupBy('id_pelanggan_222336')
+            ->orderByDesc('jumlah_transaksi')
+            ->with('pelanggan')  // Eager load relasi pelanggan untuk mendapatkan nama
+            ->first();
+
+        // --- Akhir Statistik ---
+
+        // Ambil data transaksi utama untuk ditampilkan di tabel
+        $transaksis = $query
+            ->with(['pelanggan', 'produk'])
+            ->orderBy('tanggal_transaksi_222336', 'desc')
+            ->get();
+
+        return view('pages.admin.transaksi.laporan', compact(
+            'transaksis',
+            'startDate',
+            'endDate',
+            'produkTerlaris',
+            'userTeratas'
+        ));
     }
 
     /**
