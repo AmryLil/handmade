@@ -1,229 +1,183 @@
 @extends('layouts.app')
 
-@section('title', 'Tentang Kami')
+@section('title', 'Tentang Kami - NurulMade')
 
 @section('content')
-    <section class="relative bg-blue-50 py-16">
+    <section class="relative bg-gray-50 py-16">
         <div class="w-full max-w-7xl px-4 md:px-5 lg:px-5 mx-auto">
             <div class="w-full justify-start items-center xl:gap-12 gap-10 grid lg:grid-cols-2 grid-cols-1">
                 <div class="w-full flex-col justify-center lg:items-start items-center gap-10 inline-flex">
                     <div class="w-full flex-col justify-center items-start gap-8 flex">
                         <div class="flex-col justify-start lg:items-start items-center gap-4 flex">
                             <div class="w-full flex-col justify-start lg:items-start items-center gap-3 flex">
-                                <h2 class="text-4xl font-bold font-manrope leading-normal lg:text-start text-center text-blue-800">
-                                    Selamat Datang di Azure Horizon Resort
+                                <h2
+                                    class="text-4xl font-bold font-manrope leading-normal lg:text-start text-center text-red-800">
+                                    Kisah di Balik Setiap Jahitan
                                 </h2>
-                                <p class="text-blue-600 text-base font-normal leading-relaxed lg:text-start text-center">
-                                    Azure Horizon Resort adalah destinasi penginapan mewah yang didedikasikan untuk memberikan pengalaman 
-                                    menginap tak terlupakan di tengah keindahan alam yang menakjubkan. Kami berkomitmen untuk menyediakan 
-                                    layanan bintang lima dengan sentuhan keramahan Indonesia yang hangat.
+                                <p class="text-red-600 text-base font-normal leading-relaxed lg:text-start text-center">
+                                    NurulMade lahir dari kecintaan pada kerajinan tangan dan keinginan untuk menciptakan
+                                    karya yang unik dan personal. Setiap produk kami dibuat dengan teliti, menggabungkan
+                                    material berkualitas dengan sentuhan seni yang tulus.
                                 </p>
                             </div>
                         </div>
                         <div class="w-full flex-col justify-center items-start gap-6 flex">
                             <div class="w-full justify-start items-center gap-8 grid md:grid-cols-2 grid-cols-1">
                                 <div
-                                    class="w-full h-full p-3.5 rounded-xl border border-blue-200 hover:border-blue-400 transition-all duration-700 ease-in-out flex-col justify-start items-start gap-2.5 inline-flex bg-blue-100">
-                                    <h4 class="text-2xl font-bold font-manrope leading-9 text-blue-800">150+ Kamar Mewah</h4>
-                                    <p class="text-blue-600 text-base font-normal leading-relaxed">Akomodasi eksklusif dengan pemandangan laut yang spektakuler</p>
+                                    class="w-full h-full p-3.5 rounded-xl border border-red-200 hover:border-red-400 transition-all duration-700 ease-in-out flex-col justify-start items-start gap-2.5 inline-flex bg-red-100">
+                                    <h4 class="text-2xl font-bold font-manrope leading-9 text-red-800">100% Buatan Tangan
+                                    </h4>
+                                    <p class="text-red-600 text-base font-normal leading-relaxed">Setiap karya adalah unik,
+                                        dibuat satu per satu dengan ketelitian tinggi.</p>
                                 </div>
                                 <div
-                                    class="w-full h-full p-3.5 rounded-xl border border-blue-200 hover:border-blue-400 transition-all duration-700 ease-in-out flex-col justify-start items-start gap-2.5 inline-flex bg-blue-100">
-                                    <h4 class="text-2xl font-bold font-manrope leading-9 text-blue-800">Fasilitas Premium</h4>
-                                    <p class="text-blue-600 text-base font-normal leading-relaxed">Spa, kolam renang infinity, restoran bintang 5, dan beach club</p>
+                                    class="w-full h-full p-3.5 rounded-xl border border-red-200 hover:border-red-400 transition-all duration-700 ease-in-out flex-col justify-start items-start gap-2.5 inline-flex bg-red-100">
+                                    <h4 class="text-2xl font-bold font-manrope leading-9 text-red-800">Kualitas Premium</h4>
+                                    <p class="text-red-600 text-base font-normal leading-relaxed">Kami hanya menggunakan
+                                        bahan baku terbaik untuk hasil yang tahan lama.</p>
                                 </div>
                             </div>
                             <div class="w-full h-full justify-start items-center gap-8 grid md:grid-cols-2 grid-cols-1">
                                 <div
-                                    class="w-full p-3.5 rounded-xl border border-blue-200 hover:border-blue-400 transition-all duration-700 ease-in-out flex-col justify-start items-start gap-2.5 inline-flex bg-blue-100">
-                                    <h4 class="text-2xl font-bold font-manrope leading-9 text-blue-800">15+ Tahun Pengalaman</h4>
-                                    <p class="text-blue-600 text-base font-normal leading-relaxed">Melayani tamu dari seluruh dunia dengan standar internasional</p>
+                                    class="w-full p-3.5 rounded-xl border border-red-200 hover:border-red-400 transition-all duration-700 ease-in-out flex-col justify-start items-start gap-2.5 inline-flex bg-red-100">
+                                    <h4 class="text-2xl font-bold font-manrope leading-9 text-red-800">5+ Tahun Berkarya
+                                    </h4>
+                                    <p class="text-red-600 text-base font-normal leading-relaxed">Berawal dari hobi, kini
+                                        melayani pelanggan dengan penuh cinta.</p>
                                 </div>
                                 <div
-                                    class="w-full h-full p-3.5 rounded-xl border border-blue-200 hover:border-blue-400 transition-all duration-700 ease-in-out flex-col justify-start items-start gap-2.5 inline-flex bg-blue-100">
-                                    <h4 class="text-2xl font-bold font-manrope leading-9 text-blue-800">98% Kepuasan Tamu</h4>
-                                    <p class="text-blue-600 text-base font-normal leading-relaxed">Berdasarkan ulasan tamu dan penghargaan industri perhotelan</p>
+                                    class="w-full h-full p-3.5 rounded-xl border border-red-200 hover:border-red-400 transition-all duration-700 ease-in-out flex-col justify-start items-start gap-2.5 inline-flex bg-red-100">
+                                    <h4 class="text-2xl font-bold font-manrope leading-9 text-red-800">Desain Personal</h4>
+                                    <p class="text-red-600 text-base font-normal leading-relaxed">Menerima pesanan khusus
+                                        untuk hadiah yang lebih berkesan.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="w-full lg:justify-start justify-center items-start flex">
-                    <div class="sm:w-[564px] w-full sm:h-[646px] h-full sm:border border-blue-200 rounded-xl overflow-hidden shadow-lg relative">
-                        <img class="w-full h-full object-cover"
-                            src="https://img.freepik.com/free-photo/beautiful-tropical-beach-sea-with-chair-blue-sky_74190-7488.jpg?w=740"
-                            alt="Azure Horizon Resort View" />
+                    <div
+                        class="sm:w-[564px] w-full sm:h-[646px] h-full sm:border border-red-200 rounded-xl overflow-hidden shadow-lg relative">
+                        <img class="w-full h-full object-cover" src="{{ asset('images/tentang.jpg') }}"
+                            alt="Proses pembuatan kerajinan tangan NurulMade" />
                     </div>
                 </div>
             </div>
-            
-            <!-- Vision & Mission Section -->
+
             <div class="mt-16 grid md:grid-cols-2 grid-cols-1 gap-8">
-                <div class="bg-white p-8 rounded-xl border border-blue-200 shadow-md">
-                    <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mb-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                <div class="bg-white p-8 rounded-xl border border-red-200 shadow-md">
+                    <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
                     </div>
-                    <h3 class="text-2xl font-bold text-blue-800 mb-4">Visi Kami</h3>
-                    <p class="text-blue-600">
-                        Menjadi resor terdepan di Indonesia yang dikenal dengan keunggulan layanan, fasilitas berkelas dunia, 
-                        dan pengalaman menginap yang melebihi ekspektasi setiap tamu. Kami beraspirasi untuk menciptakan kenangan 
-                        tak terlupakan yang membuat tamu ingin kembali lagi dan lagi.
+                    <h3 class="text-2xl font-bold text-red-800 mb-4">Visi Kami</h3>
+                    <p class="text-red-600">
+                        Menjadi brand kerajinan tangan terdepan di Indonesia yang menginspirasi kreativitas dan melestarikan
+                        nilai-nilai keaslian produk buatan tangan. Kami bercita-cita membawa kehangatan karya personal ke
+                        setiap rumah.
                     </p>
                 </div>
-                
-                <div class="bg-white p-8 rounded-xl border border-blue-200 shadow-md">
-                    <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mb-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+
+                <div class="bg-white p-8 rounded-xl border border-red-200 shadow-md">
+                    <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
                         </svg>
                     </div>
-                    <h3 class="text-2xl font-bold text-blue-800 mb-4">Misi Kami</h3>
-                    <p class="text-blue-600">
+                    <h3 class="text-2xl font-bold text-red-800 mb-4">Misi Kami</h3>
+                    <p class="text-red-600">
                         Kami berkomitmen untuk:
                     </p>
-                    <ul class="text-blue-600 mt-2 space-y-2 list-disc pl-5">
-                        <li>Memberikan layanan hospitality terbaik dengan kualitas tanpa kompromi</li>
-                        <li>Menciptakan lingkungan yang menyatu dengan alam sekitar</li>
-                        <li>Mempromosikan pariwisata berkelanjutan dan mendukung komunitas lokal</li>
-                        <li>Terus berinovasi dalam layanan dan fasilitas untuk memenuhi kebutuhan tamu</li>
+                    <ul class="text-red-600 mt-2 space-y-2 list-disc pl-5">
+                        <li>Menghasilkan produk buatan tangan dengan kualitas dan desain terbaik.</li>
+                        <li>Memberikan pelayanan yang ramah dan personal kepada setiap pelanggan.</li>
+                        <li>Mendukung pengrajin lokal dan menggunakan bahan baku yang ramah lingkungan.</li>
+                        <li>Terus berinovasi untuk menciptakan produk-produk baru yang kreatif.</li>
                     </ul>
                 </div>
             </div>
-            
-            <!-- Our Story Section -->
+
             <div class="mt-16">
-                <h2 class="text-3xl font-bold text-blue-800 text-center mb-8">Perjalanan Kami</h2>
-                <div class="bg-white p-8 rounded-xl border border-blue-200 shadow-md">
-                    <div class="prose max-w-none text-blue-600">
+                <h2 class="text-3xl font-bold text-red-800 text-center mb-8">Perjalanan Kami</h2>
+                <div class="bg-white p-8 rounded-xl border border-red-200 shadow-md">
+                    <div class="prose max-w-none text-red-600">
                         <p>
-                            Azure Horizon Resort didirikan pada tahun 2008 oleh keluarga Wijaya dengan visi menciptakan 
-                            destinasi penginapan mewah yang menyatu dengan keindahan alam Indonesia. Bermula dari sebuah 
-                            villa kecil dengan 25 kamar, properti kami telah berkembang menjadi resor mewah bintang lima 
-                            yang dikenal di seluruh dunia.
+                            NurulMade dimulai pada tahun 2018 dari sebuah meja kecil di sudut kamar. Berbekal hasrat untuk
+                            menjahit dan menciptakan sesuatu yang indah, Nurul, sang pendiri, mulai membuat dompet dan tas
+                            kain untuk teman dan keluarga.
                         </p>
                         <p class="mt-4">
-                            Selama lebih dari 15 tahun beroperasi, kami terus berkomitmen untuk menyempurnakan setiap aspek 
-                            pengalaman tamu. Dari melakukan renovasi besar-besaran pada tahun 2015 yang menambahkan kolam renang 
-                            infinity terbesar di pulau, hingga membangun spa mewah pada tahun 2018 yang telah memenangkan 
-                            penghargaan internasional.
+                            Respon positif yang diterima mendorongnya untuk membuka toko online pertama. Dari sana,
+                            perjalanan kami berkembang. Kami mulai berpartisipasi dalam bazar kerajinan lokal, di mana kami
+                            bisa bertemu langsung dengan para pelanggan dan mendengar cerita mereka.
                         </p>
                         <p class="mt-4">
-                            Azure Horizon Resort juga menjadi pionir dalam praktik pariwisata berkelanjutan, dengan inisiatif 
-                            ramah lingkungan seperti penggunaan panel surya, sistem pengolahan air limbah canggih, dan program 
-                            konservasi terumbu karang di perairan sekitar resor.
-                        </p>
-                        <p class="mt-4">
-                            Hari ini, kami bangga memiliki tim profesional beranggotakan 350 staf yang berdedikasi tinggi untuk 
-                            memberikan pengalaman menginap luar biasa bagi setiap tamu yang datang ke Azure Horizon Resort.
+                            Kini, NurulMade telah memiliki workshop kecil sendiri, menjadi rumah bagi tim kreatif yang
+                            solid. Kami bangga telah mengirimkan ribuan produk ke seluruh penjuru Indonesia, masing-masing
+                            membawa cerita dan harapan dari workshop kami.
                         </p>
                     </div>
                 </div>
             </div>
-            
-            <!-- Team Section -->
-            <div class="mt-16">
-                <h2 class="text-3xl font-bold text-blue-800 text-center mb-8">Tim Manajemen</h2>
-                <div class="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-8">
-                    <!-- Team Member 1 -->
-                    <div class="bg-white rounded-xl border border-blue-200 shadow-md overflow-hidden">
-                        <div class="h-64 bg-blue-200">
-                            <!-- Placeholder for team member photo -->
-                            <div class="w-full h-full flex items-center justify-center bg-blue-100">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-blue-800">Budi Wijaya</h3>
-                            <p class="text-blue-600 font-medium">CEO & Founder</p>
-                            <p class="mt-2 text-blue-500 text-sm">
-                                Memiliki lebih dari 25 tahun pengalaman dalam industri perhotelan dan pariwisata mewah.
-                            </p>
-                        </div>
-                    </div>
-                    
-                    <!-- Team Member 2 -->
-                    <div class="bg-white rounded-xl border border-blue-200 shadow-md overflow-hidden">
-                        <div class="h-64 bg-blue-200">
-                            <!-- Placeholder for team member photo -->
-                            <div class="w-full h-full flex items-center justify-center bg-blue-100">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-blue-800">Sarah Tandjung</h3>
-                            <p class="text-blue-600 font-medium">Operations Director</p>
-                            <p class="mt-2 text-blue-500 text-sm">
-                                Ahli dalam manajemen operasional resor mewah dengan latar belakang pendidikan dari Switzerland.
-                            </p>
-                        </div>
-                    </div>
-                    
-                    <!-- Team Member 3 -->
-                    <div class="bg-white rounded-xl border border-blue-200 shadow-md overflow-hidden">
-                        <div class="h-64 bg-blue-200">
-                            <!-- Placeholder for team member photo -->
-                            <div class="w-full h-full flex items-center justify-center bg-blue-100">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-blue-800">Chef Andre Wibowo</h3>
-                            <p class="text-blue-600 font-medium">Executive Chef</p>
-                            <p class="mt-2 text-blue-500 text-sm">
-                                Chef berpengalaman internasional yang membawa sentuhan kuliner kelas dunia ke seluruh restoran kami.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Awards Section -->
-            <div class="mt-16 bg-white p-8 rounded-xl border border-blue-200 shadow-md">
-                <h2 class="text-3xl font-bold text-blue-800 text-center mb-8">Penghargaan & Sertifikasi</h2>
+
+            <div class="mt-16 bg-white p-8 rounded-xl border border-red-200 shadow-md">
+                <h2 class="text-3xl font-bold text-red-800 text-center mb-8">Apresiasi & Pencapaian</h2>
                 <div class="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-6 text-center">
                     <div class="p-4">
-                        <div class="w-16 h-16 mx-auto bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                        <div class="w-16 h-16 mx-auto bg-red-100 rounded-full flex items-center justify-center mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-600" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                             </svg>
                         </div>
-                        <h3 class="font-bold text-blue-800">World Luxury Hotel Awards</h3>
-                        <p class="text-blue-500 text-sm">2022, 2023</p>
+                        <h3 class="font-bold text-red-800">UMKM Kreatif Award</h3>
+                        <p class="text-red-500 text-sm">2023</p>
                     </div>
                     <div class="p-4">
-                        <div class="w-16 h-16 mx-auto bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                        <div class="w-16 h-16 mx-auto bg-red-100 rounded-full flex items-center justify-center mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-600" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
                             </svg>
                         </div>
-                        <h3 class="font-bold text-blue-800">Five-Star Rating</h3>
-                        <p class="text-blue-500 text-sm">Forbes Travel Guide</p>
+                        <h3 class="font-bold text-red-800">Pilihan Editor</h3>
+                        <p class="text-red-500 text-sm">Majalah Kerajinan</p>
                     </div>
                     <div class="p-4">
-                        <div class="w-16 h-16 mx-auto bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
+                        <div class="w-16 h-16 mx-auto bg-red-100 rounded-full flex items-center justify-center mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-600" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>
                         </div>
-                        <h3 class="font-bold text-blue-800">Spa Excellence</h3>
-                        <p class="text-blue-500 text-sm">World Spa Awards</p>
+                        <h3 class="font-bold text-red-800">Produk Lokal Favorit</h3>
+                        <p class="text-red-500 text-sm">Komunitas Crafty</p>
                     </div>
                     <div class="p-4">
-                        <div class="w-16 h-16 mx-auto bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <div class="w-16 h-16 mx-auto bg-red-100 rounded-full flex items-center justify-center mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-600" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10l2-2h8a1 1 0 001-1z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M20.5 14H18a1 1 0 01-1-1V6a1 1 0 011-1h1.5a1 1 0 011 1v7.5a1.5 1.5 0 01-1.5 1.5z" />
                             </svg>
                         </div>
-                        <h3 class="font-bold text-blue-800">Green Globe</h3>
-                        <p class="text-blue-500 text-sm">Sertifikasi Berkelanjutan</p>
+                        <h3 class="font-bold text-red-800">500+ Pengiriman</h3>
+                        <p class="text-red-500 text-sm">ke Seluruh Indonesia</p>
                     </div>
                 </div>
             </div>

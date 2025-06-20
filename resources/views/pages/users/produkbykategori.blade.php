@@ -18,7 +18,7 @@
                                 d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                                 clip-rule="evenodd" />
                         </svg>
-                        <span class="ml-2 text-gray-800 font-medium">{{ $kategori->nama_2222336 }}</span>
+                        <span class="ml-2 text-gray-800 font-medium">{{ $kategori->nama_222336 }}</span>
                     </li>
                 </ol>
             </nav>
@@ -27,9 +27,9 @@
             <div class="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-200 mb-8">
                 <div class="md:flex">
                     <div class="md:flex-shrink-0">
-                        @if ($kategori->path_img_2222336)
-                            <img src="{{ asset($kategori->path_img_2222336) }}" alt="{{ $kategori->nama_2222336 }}"
-                                class="h-64 w-full object-cover md:w-64">
+                        @if ($kategori->path_img_222336)
+                            <img src="{{ asset('storage/' . $kategori->path_img_222336) }}"
+                                alt="{{ $kategori->nama_222336 }}" class="h-64 w-full object-cover md:w-64">
                         @else
                             <div class="h-64 w-full md:w-64 bg-gray-100 flex items-center justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-gray-300" fill="none"
@@ -42,14 +42,14 @@
                     </div>
                     <div class="p-6">
                         <div class="uppercase tracking-wide text-sm text-red-600 font-semibold">Kategori</div>
-                        <h1 class="mt-1 text-2xl font-bold text-gray-900">{{ $kategori->nama_2222336 }}</h1>
+                        <h1 class="mt-1 text-2xl font-bold text-gray-900">{{ $kategori->nama_222336 }}</h1>
                         <p class="mt-3 text-gray-600">
-                            {{ $kategori->deskripsi_2222336 ?: 'Tidak ada deskripsi untuk kategori ini.' }}
+                            {{ $kategori->deskripsi_222336 ?: 'Tidak ada deskripsi untuk kategori ini.' }}
                         </p>
 
-                        @if ($kategori->tags_2222336)
+                        @if ($kategori->tags_222336)
                             <div class="mt-4 flex flex-wrap gap-2">
-                                @foreach (explode(',', $kategori->tags_2222336) as $tag)
+                                @foreach (explode(',', $kategori->tags_222336) as $tag)
                                     <span
                                         class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
                                         {{ trim($tag) }}
@@ -71,8 +71,8 @@
                             <div
                                 class="bg-white overflow-hidden shadow-sm rounded-lg border border-gray-200 transition-all hover:shadow-md">
                                 <div class="relative">
-                                    @if ($produk->path_img_2222336)
-                                        <img src="{{ $produk->getImageUrlAttribute() }}" alt="{{ $produk->nama_2222336 }}"
+                                    @if ($produk->path_img_222336)
+                                        <img src="{{ $produk->getImageUrlAttribute() }}" alt="{{ $produk->nama_222336 }}"
                                             class="w-full h-48 object-cover">
                                     @else
                                         <div class="w-full h-48 bg-gray-100 flex items-center justify-center">
@@ -84,34 +84,34 @@
                                         </div>
                                     @endif
 
-                                    @if ($produk->diskon_2222336 > 0)
+                                    @if ($produk->diskon_222336 > 0)
                                         <div class="absolute top-2 right-2 bg-red-600 text-white text-xs px-2 py-1 rounded">
-                                            Diskon {{ $produk->diskon_2222336 }}%
+                                            Diskon {{ $produk->diskon_222336 }}%
                                         </div>
                                     @endif
                                 </div>
 
                                 <div class="p-4">
-                                    <h3 class="text-lg font-medium text-gray-900">{{ $produk->nama_2222336 }}</h3>
+                                    <h3 class="text-lg font-medium text-gray-900">{{ $produk->nama_222336 }}</h3>
 
                                     <p class="mt-1 text-sm text-gray-500 line-clamp-2">
-                                        {{ $produk->deskripsi_2222336 }}
+                                        {{ $produk->deskripsi_222336 }}
                                     </p>
 
                                     <div class="mt-3">
-                                        @if ($produk->diskon_2222336 > 0)
+                                        @if ($produk->diskon_222336 > 0)
                                             <div class="flex items-baseline">
                                                 <span class="text-lg font-bold text-red-600">
                                                     Rp
-                                                    {{ number_format(($produk->harga_2222336 * (100 - $produk->diskon_2222336)) / 100, 0, ',', '.') }}
+                                                    {{ number_format(($produk->harga_222336 * (100 - $produk->diskon_222336)) / 100, 0, ',', '.') }}
                                                 </span>
                                                 <span class="ml-2 text-sm text-gray-500 line-through">
-                                                    Rp {{ number_format($produk->harga_2222336, 0, ',', '.') }}
+                                                    Rp {{ number_format($produk->harga_222336, 0, ',', '.') }}
                                                 </span>
                                             </div>
                                         @else
                                             <span class="text-lg font-bold text-gray-900">
-                                                Rp {{ number_format($produk->harga_2222336, 0, ',', '.') }}
+                                                Rp {{ number_format($produk->harga_222336, 0, ',', '.') }}
                                             </span>
                                         @endif
                                     </div>

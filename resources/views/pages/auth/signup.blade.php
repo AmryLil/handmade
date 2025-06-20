@@ -67,7 +67,7 @@
                     @endif
 
                     <!-- Form -->
-                    <form action="#" method="POST" class="space-y-4">
+                    <form action="{{ route('register.submit') }}" method="POST" class="space-y-4">
                         @csrf
                         <div class="flex flex-col space-y-4">
                             <!-- Full Name -->

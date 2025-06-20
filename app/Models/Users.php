@@ -14,40 +14,35 @@ class Users extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
-    protected $table      = 'users_2222336';
-    protected $primaryKey = 'id_2222336';
+    protected $table      = 'users_222336';
+    protected $primaryKey = 'email_222336';
     public $incrementing  = false;
     protected $keyType    = 'string';
 
     protected $fillable = [
-        'id_2222336',
-        'email_2222336',
+        'email_222336',
         'name',
-        'password_2222336',
-        'gender_2222336',
-        'role_2222336',
-        'address_2222336',
-        'phone_2222336',
-        'birth_date_2222336',
-        'profile_photo_2222336',
+        'password_222336',
+        'role_222336',
+        'profile_photo_222336',
     ];
 
     protected $hidden = [
-        'password_2222336',
+        'password_222336',
     ];
 
     protected $casts = [
-        'birth_date_2222336' => 'date',
+        'birth_date_222336' => 'date',
     ];
 
     public function getAuthPassword()
     {
-        return $this->password_2222336;
+        return $this->password_222336;
     }
 
     public function getAuthIdentifierName()
     {
-        return 'id_2222336';
+        return 'email_222336';
     }
 
     /**
@@ -60,43 +55,30 @@ class Users extends Authenticatable
         return $this->{$this->getAuthIdentifierName()};
     }
 
-    protected static function boot()
-    {
-        parent::boot();
-        self::creating(function ($model) {
-            $model->id_2222336 = IdGenerator::generateId(new Users, 'USR', 8);
-        });
-    }
-
     public function cart()
     {
-        return $this->hasOne(Cart::class, 'user_id_2222336', 'id_2222336');
+        return $this->hasOne(Cart::class, 'user_id_222336', 'email_222336');
     }
 
     public function transaksi()
     {
-        return $this->hasMany(Transaksi::class, 'id_pelanggan_2222336', 'id_2222336');
+        return $this->hasMany(Transaksi::class, 'id_pelanggan_222336', 'email_222336');
     }
 
     public function reviews()
     {
-        return $this->hasMany(Preview::class, 'user_id_2222336', 'id_2222336');
+        return $this->hasMany(Preview::class, 'user_id_222336', 'email_222336');
     }
 
     public function permintaanCustom()
     {
-        return $this->hasMany(PermintaanCustom::class, 'user_id_2222336', 'id_2222336');
-    }
-
-    public function canAccessPanel(Panel $panel): bool
-    {
-        return $this->role_2222336 === 'admin';
+        return $this->hasMany(PermintaanCustom::class, 'user_id_222336', 'email_222336');
     }
 
     // For Filament avatar
     public function getFilamentAvatarUrl(): ?string
     {
-        return $this->profile_photo_2222336 ? asset('storage/' . $this->profile_photo_2222336) : null;
+        return $this->profile_photo_222336 ? asset('storage/' . $this->profile_photo_222336) : null;
     }
 
     // If you want to use Filament name display
