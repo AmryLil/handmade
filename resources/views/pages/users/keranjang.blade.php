@@ -77,22 +77,44 @@
                 </div>
             </div>
 
+            {{-- ============== START PERUBAHAN DISINI ============== --}}
             <div class="bg-white rounded-lg shadow p-6 h-fit">
                 <h2 class="text-lg font-semibold mb-4">Ringkasan</h2>
+
+                {{-- Input Voucher --}}
+                <div class="mb-4">
+                    <label for="kode-voucher-input" class="block text-sm font-medium text-gray-700 mb-1">Punya
+                        Voucher?</label>
+                    <div class="flex">
+                        <input type="text" id="kode-voucher-input" placeholder="Masukkan kode voucher"
+                            class="flex-1 border rounded-l p-2 focus:ring-blue-500 focus:border-blue-500">
+                        <button id="apply-voucher-btn"
+                            class="bg-gray-800 text-white px-4 rounded-r hover:bg-gray-900">Pakai</button>
+                    </div>
+                    <p id="voucher-status-message" class="text-sm mt-2"></p>
+                </div>
+
                 <div class="space-y-2 mb-4">
                     <div class="flex justify-between">
                         <span>Subtotal</span>
-                        <span id="summary-subtotal">Rp {{ number_format($total, 0, ',', '.') }}</span>
+                        {{-- Simpan nilai asli subtotal di data attribute untuk kalkulasi JS --}}
+                        <span id="summary-subtotal" data-value="{{ $total }}">Rp
+                            {{ number_format($total, 0, ',', '.') }}</span>
+                    </div>
+                    <div class="flex justify-between text-green-600" id="summary-discount-container" style="display: none;">
+                        <span>Diskon Voucher</span>
+                        <span id="summary-discount">Rp 0</span>
                     </div>
                     <div class="flex justify-between">
                         <span>Ongkir</span>
                         <span>Gratis</span>
                     </div>
-                    <div class="border-t pt-2 flex justify-between font-bold">
+                    <div class="border-t pt-2 flex justify-between font-bold text-lg">
                         <span>Total</span>
                         <span id="summary-total">Rp {{ number_format($total, 0, ',', '.') }}</span>
                     </div>
                 </div>
+
                 @if ($cart && $items->count() > 0)
                     <button onclick="showPaymentModal()"
                         class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 mb-2">Checkout</button>
@@ -103,6 +125,7 @@
                         Kosong</button>
                 @endif
             </div>
+            {{-- ============== AKHIR PERUBAHAN DISINI ============== --}}
         </div>
     </div>
 
@@ -122,7 +145,7 @@
                             <div id="checkout-products" class="space-y-2 mb-4 max-h-60 overflow-y-auto"></div>
                             <div class="border-t pt-2">
                                 <div class="flex justify-between font-bold">
-                                    <span>Total:</span>
+                                    <span>Total Akhir:</span>
                                     <span id="checkout-total">Rp 0</span>
                                 </div>
                             </div>
@@ -165,6 +188,121 @@
         // Pastikan CSRF Token tersedia
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
+        // ============== START SCRIPT VOUCHER ==============
+        document.addEventListener('DOMContentLoaded', function() {
+            // State untuk menyimpan data voucher yang sedang dipakai
+            let appliedVoucher = {
+                code: null,
+                discountPercentage: 0
+            };
+
+            const voucherInput = document.getElementById('kode-voucher-input');
+            const applyBtn = document.getElementById('apply-voucher-btn');
+            const voucherStatusMsg = document.getElementById('voucher-status-message');
+
+            const subtotalEl = document.getElementById('summary-subtotal');
+            const discountContainerEl = document.getElementById('summary-discount-container');
+            const discountEl = document.getElementById('summary-discount');
+            const totalEl = document.getElementById('summary-total');
+
+            const subtotalValue = parseFloat(subtotalEl.dataset.value);
+
+            applyBtn.addEventListener('click', function() {
+                // Jika sedang ada voucher, tombol berfungsi untuk menghapus
+                if (appliedVoucher.code) {
+                    resetVoucherState();
+                    return;
+                }
+
+                const voucherCode = voucherInput.value.trim();
+                if (!voucherCode) {
+                    voucherStatusMsg.textContent = 'Harap masukkan kode voucher.';
+                    voucherStatusMsg.className = 'text-sm mt-2 text-red-600';
+                    return;
+                }
+
+                checkVoucherOnServer(voucherCode);
+            });
+
+            function checkVoucherOnServer(code) {
+                showLoading();
+                // Menggunakan URL yang sama seperti yang kita buat di LoginController
+                fetch('{{ route('vouchers.validate') }}', { // Pastikan route ini ada
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': csrfToken,
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            kode_voucher: code
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        hideLoading();
+                        if (data.valid) {
+                            applyVoucher(code, data.persentase_diskon);
+                            voucherStatusMsg.textContent = data.message;
+                            voucherStatusMsg.className = 'text-sm mt-2 text-green-600';
+                        } else {
+                            resetVoucherState();
+                            voucherStatusMsg.textContent = data.message;
+                            voucherStatusMsg.className = 'text-sm mt-2 text-red-600';
+                        }
+                    })
+                    .catch(err => {
+                        hideLoading();
+                        console.error("Voucher check error:", err);
+                        voucherStatusMsg.textContent = 'Terjadi kesalahan saat memeriksa voucher.';
+                        voucherStatusMsg.className = 'text-sm mt-2 text-red-600';
+                    });
+            }
+
+            function applyVoucher(code, percentage) {
+                appliedVoucher.code = code;
+                appliedVoucher.discountPercentage = parseFloat(percentage);
+
+                updateSummary();
+
+                // Ubah tampilan tombol
+                applyBtn.textContent = 'Hapus';
+                applyBtn.classList.remove('bg-gray-800', 'hover:bg-gray-900');
+                applyBtn.classList.add('bg-red-600', 'hover:bg-red-700');
+                voucherInput.disabled = true;
+            }
+
+            function resetVoucherState() {
+                appliedVoucher.code = null;
+                appliedVoucher.discountPercentage = 0;
+
+                updateSummary();
+
+                // Kembalikan tampilan tombol
+                applyBtn.textContent = 'Pakai';
+                applyBtn.classList.remove('bg-red-600', 'hover:bg-red-700');
+                applyBtn.classList.add('bg-gray-800', 'hover:bg-gray-900');
+                voucherInput.disabled = false;
+                voucherInput.value = '';
+                voucherStatusMsg.textContent = '';
+            }
+
+            function updateSummary() {
+                let discountAmount = 0;
+                if (appliedVoucher.code) {
+                    discountAmount = (subtotalValue * appliedVoucher.discountPercentage) / 100;
+                    discountEl.textContent = `- Rp ${numberFormat(discountAmount)}`;
+                    discountContainerEl.style.display = 'flex';
+                } else {
+                    discountContainerEl.style.display = 'none';
+                }
+
+                const finalTotal = subtotalValue - discountAmount;
+                totalEl.textContent = `Rp ${numberFormat(finalTotal)}`;
+            }
+        });
+
+
         function showPaymentModal() {
             const productsList = document.getElementById('checkout-products');
             const totalElement = document.getElementById('checkout-total');
@@ -185,16 +323,34 @@
             });
 
             const form = document.getElementById('payment-form');
+            // Hapus input lama jika ada untuk mencegah duplikasi
             if (form.querySelector('input[name="cart_items"]')) {
                 form.querySelector('input[name="cart_items"]').remove();
             }
+            if (form.querySelector('input[name="kode_voucher"]')) {
+                form.querySelector('input[name="kode_voucher"]').remove();
+            }
+
+            // Tambahkan input hidden untuk data keranjang
             const cartInput = document.createElement('input');
             cartInput.type = 'hidden';
             cartInput.name = 'cart_items';
             cartInput.value = JSON.stringify(cartItems);
             form.appendChild(cartInput);
 
+            // ============== PERUBAHAN DISINI ==============
+            // Tambahkan input hidden untuk kode voucher yang dipakai
+            const voucherInput = document.createElement('input');
+            voucherInput.type = 'hidden';
+            voucherInput.name = 'kode_voucher';
+            voucherInput.value = document.getElementById('kode-voucher-input')
+                .value; // Ambil nilai voucher yang sedang diterapkan
+            form.appendChild(voucherInput);
+
+            // Ambil total akhir dari ringkasan yang sudah dihitung dengan diskon
             totalElement.textContent = document.getElementById('summary-total').textContent;
+            // ===============================================
+
             modal.classList.remove('hidden');
             modal.classList.add('flex');
         }
@@ -261,11 +417,10 @@
             return new Intl.NumberFormat('id-ID').format(number);
         }
 
-        // --- FUNGSI YANG DIPERBAIKI ---
+        // --- Fungsi bawaan yang sudah ada, tidak perlu diubah ---
         function updateQuantity(itemId, newQuantity) {
             if (newQuantity < 1) return;
             showLoading();
-
             fetch(`/cart/item/${itemId}`, {
                 method: 'PUT',
                 headers: {
@@ -277,12 +432,10 @@
                     quantity: parseInt(newQuantity)
                 })
             }).then(res => res.json()).then(data => {
-                // [FIXED] Check 'message' from controller, not 'success'
                 if (data.message) {
                     location.reload();
                 } else {
                     hideLoading();
-                    // [FIXED] Don't reload on error, show message instead
                     alert(data.error || 'Gagal memperbarui kuantitas produk.');
                 }
             }).catch(err => {
@@ -294,7 +447,6 @@
         function removeItem(itemId) {
             if (!confirm('Anda yakin ingin menghapus item ini dari keranjang?')) return;
             showLoading();
-
             fetch(`/cart/item/${itemId}`, {
                 method: 'DELETE',
                 headers: {
@@ -302,7 +454,6 @@
                     'Accept': 'application/json'
                 }
             }).then(res => res.json()).then(data => {
-                // [FIXED] Check 'message' from controller, not 'success'
                 if (data.message) {
                     location.reload();
                 } else {
@@ -318,7 +469,6 @@
         function clearCart() {
             if (!confirm('Anda yakin ingin mengosongkan seluruh keranjang belanja?')) return;
             showLoading();
-
             fetch('/cart/clear', {
                 method: 'DELETE',
                 headers: {
@@ -326,7 +476,6 @@
                     'Accept': 'application/json'
                 }
             }).then(res => res.json()).then(data => {
-                // [FIXED] Check 'message' from controller, not 'success'
                 if (data.message) {
                     location.reload();
                 } else {

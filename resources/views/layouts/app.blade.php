@@ -42,6 +42,69 @@
         <div id="dark-body"
             class="transition-all duration-150 ease-in-out w-screen h-screen hidden start-0 bg-slate-50 opacity-45 z-40">
         </div>
+        @if (session('show_new_user_voucher'))
+            @php
+                $voucherData = session('show_new_user_voucher');
+            @endphp
+
+
+            <div id="newUserVoucherModal" style="background-color: rgba(0, 0, 0, 0.5);"
+                class="fixed inset-0 bg-black  flex items-center justify-center z-50">
+                <!-- Modal Content -->
+                <div class="bg-white rounded-2xl p-6 max-w-md w-full text-center relative shadow-lg">
+                    <!-- Tombol Close -->
+                    <button onclick="closeVoucherModal()"
+                        class="absolute top-3 right-4 text-gray-500 hover:text-red-500 text-xl font-bold">&times;</button>
+
+                    <!-- Gambar Hadiah -->
+                    <img src="https://img.icons8.com/bubbles/100/gift.png" alt="Gift Icon" class="mx-auto mb-4" />
+
+                    <h4 class="text-xl font-bold">Selamat Datang!</h4>
+                    <p class="text-gray-600 mt-2">
+                        Sebagai hadiah selamat datang, kami memberikan voucher diskon spesial sebesar
+                        <strong>{{ $voucherData['diskon'] }}%</strong> untuk booking pertama Anda!
+                    </p>
+
+                    <div class="mt-4">
+                        <p class="mb-2">Gunakan kode unik ini saat checkout:</p>
+                        <div
+                            class="border-dashed border-2 border-green-400 text-green-600 font-bold text-lg py-2 rounded">
+                            {{ $voucherData['kode'] }}
+                        </div>
+                    </div>
+
+                    <div class="mt-6">
+                        <button onclick="closeVoucherModal()"
+                            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                            Siap, Saya Mengerti!
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+            <script>
+                function closeVoucherModal() {
+                    const modal = document.getElementById('newUserVoucherModal');
+                    if (modal) {
+                        modal.remove();
+
+                        fetch("{{ route('remove.voucher.session') }}", {
+                            method: "POST",
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Content-Type': 'application/json',
+                            }
+                        });
+                    }
+                }
+
+                // Tampilkan otomatis saat halaman siap
+                document.addEventListener('DOMContentLoaded', () => {
+                    document.getElementById('newUserVoucherModal').classList.remove('hidden');
+                });
+            </script>
+        @endif
         @yield('content')
     </main>
 

@@ -151,8 +151,38 @@
             </div>
         </div>
 
+        <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden">
 
-        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+            <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-white">
+                    Peringatan Stok Rendah (Kurang dari 5)
+                </h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">3 produk dengan stok paling sedikit.</p>
+            </div>
+
+            <div class="p-6 mb-5">
+                @if ($produkStokRendah->isEmpty())
+                    <p class="text-gray-600 dark:text-gray-400">Tidak ada produk dengan stok rendah saat ini.</p>
+                @else
+                    <ul class="space-y-4">
+                        @foreach ($produkStokRendah as $produk)
+                            <li class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700/50 rounded-md">
+                                <span
+                                    class="font-medium text-gray-700 dark:text-gray-200">{{ $produk->nama_222336 }}</span>
+                                <span
+                                    class="bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300 text-sm font-bold px-3 py-1 rounded-full">
+                                    Stok: {{ $produk->jumlah_222336 }}
+                                </span>
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
+            </div>
+
+        </div>
+
+
+        <div class="bg-white mt-5 rounded-xl shadow-lg overflow-hidden border border-gray-100">
             <div class="bg-gradient-to-r from-red-600 to-red-700 px-6 py-4">
                 <div class="flex items-center justify-between">
                     <h3 class="text-xl font-semibold text-white">Detail Data Transaksi</h3>

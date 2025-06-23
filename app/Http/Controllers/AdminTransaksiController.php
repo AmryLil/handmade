@@ -127,6 +127,12 @@ class AdminTransaksiController extends Controller
             ->with('pelanggan')  // Eager load relasi pelanggan untuk mendapatkan nama
             ->first();
 
+        // 3. (BARU) Ambil 3 produk dengan stok kurang dari 5
+        $produkStokRendah = \App\Models\Produk::where('jumlah_222336', '<', 5)
+            ->orderBy('jumlah_222336', 'asc')  // Urutkan dari stok paling sedikit
+            ->limit(3)
+            ->get();
+
         // --- Akhir Statistik ---
 
         // Ambil data transaksi utama untuk ditampilkan di tabel
@@ -140,7 +146,8 @@ class AdminTransaksiController extends Controller
             'startDate',
             'endDate',
             'produkTerlaris',
-            'userTeratas'
+            'userTeratas',
+            'produkStokRendah'  // Tambahkan variabel ini untuk dikirim ke view
         ));
     }
 

@@ -75,6 +75,16 @@ Route::middleware('auth')->group(function () {
     Route::post('/transaksi/upload-batch', [TransaksiController::class, 'uploadBatch'])->name('transaksi.uploadBatch');
 
     Route::post('/checkout/complete', [TransaksiController::class, 'completeCheckout'])->name('checkout.complete');
+    Route::post('/remove-voucher-session', function () {
+        session()->forget('show_new_user_voucher');
+        return response()->json(['status' => 'session cleared']);
+    })->name('remove.voucher.session');
+
+    Route::post('/vouchers/validate', [UserController::class, 'validateAjax'])->name('vouchers.validate');
+
+    Route::get('/vouchers/saya', [UserController::class, 'myVouchers'])
+        ->middleware('auth')
+        ->name('vouchers.my');
 });
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {

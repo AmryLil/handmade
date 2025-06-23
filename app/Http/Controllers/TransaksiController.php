@@ -161,82 +161,132 @@ class TransaksiController extends Controller
 
     public function completeCheckout(Request $request)
     {
-        // 1. Validasi input dari form modal
-        $request->validate([
-            'cart_items' => 'required|json',  // Data keranjang dari input hidden
-            'bukti_tf'   => 'required|image|max:2048',  // File bukti transfer
+        // 1. Validasi input, TERMASUK kode voucher sekarang
+        $validatedData = $request->validate([
+            'cart_items'   => 'required|json',
+            'bukti_tf'     => 'required|image|max:2048',
+            'kode_voucher' => 'nullable|string',  // Voucher boleh kosong
         ]);
 
-        $user      = Auth::user();
-        // Ambil item dari JSON string, bukan dari database cart lagi
-        $cartItems = json_decode($request->input('cart_items'), true);
+        $user        = Auth::user();
+        $cartItems   = json_decode($validatedData['cart_items'], true);
+        $kodeVoucher = $validatedData['kode_voucher'];
 
         if (empty($cartItems)) {
-            return response()->json([
-                'success' => false,
-                'error'   => 'Keranjang belanja kosong.'
-            ], 400);
+            return response()->json(['success' => false, 'error' => 'Keranjang belanja kosong.'], 400);
         }
 
-        DB::beginTransaction();
+        // Gunakan DB Transaction untuk memastikan semua proses berhasil atau semua gagal.
         try {
-            // 2. Simpan file bukti transfer terlebih dahulu
+            DB::beginTransaction();
+
+            // --- TAHAP 1: KALKULASI HARGA ASLI & VALIDASI PRODUK ---
+            // JANGAN PERNAH PERCAYA HARGA DARI FRONTEND, HITUNG ULANG DI SERVER!
+            $hargaSubtotalAsli = 0;
+            $itemsToProcess    = [];
+
+            foreach ($cartItems as $item) {
+                // Gunakan findOrFail untuk otomatis error jika produk tidak ditemukan
+                $produk = \App\Models\Produk::findOrFail($item['id']);
+
+                if ($produk->jumlah_222336 < $item['jumlah']) {
+                    throw new \Exception('Stok produk ' . $produk->nama_222336 . ' tidak mencukupi.');
+                }
+
+                $hargaItemAsli      = $produk->harga_222336 * $item['jumlah'];
+                $hargaSubtotalAsli += $hargaItemAsli;
+
+                $itemsToProcess[] = [
+                    'produk'     => $produk,
+                    'jumlah'     => $item['jumlah'],
+                    'harga_asli' => $hargaItemAsli
+                ];
+            }
+
+            // --- TAHAP 2: VALIDASI & PENERAPAN VOUCHER ---
+            $persentaseDiskon = 0;
+            $voucherValid     = null;  // Variabel untuk menyimpan voucher yang valid
+
+            if ($kodeVoucher) {
+                // Cari voucher berdasarkan KODE, KEPEMILIKAN USER, dan STATUS
+                $voucher = \App\Models\Voucher::where('kode_voucher_222336', $kodeVoucher)
+                    ->where('id_user_222336', $user->email_222336)
+                    ->where('status_222336', 'tersedia')
+                    ->where('tanggal_kadaluarsa_222336', '>=', now())
+                    ->first();
+
+                // Jika voucher tidak ditemukan atau tidak valid, lempar error
+                if (!$voucher) {
+                    throw new \Exception('Kode voucher tidak valid, sudah dipakai, atau kadaluarsa.');
+                }
+
+                // Jika valid, simpan voucher dan persentase diskonnya
+                $voucherValid     = $voucher;
+                $persentaseDiskon = $voucher->persentase_diskon_222336;
+            }
+
+            // --- TAHAP 3: FINALISASI & PEMBUATAN TRANSAKSI ---
+
             $filePath = $request->file('bukti_tf')->store('bukti_transfer', 'public');
 
-            $totalHarga = 0;
+            foreach ($itemsToProcess as $procItem) {
+                $hargaItemFinal = $procItem['harga_asli'];
 
-            // 3. Loop melalui item yang ada di form, bukan di session/db cart
-            foreach ($cartItems as $item) {
-                // Pastikan produk ada dan stok cukup
-                $produk = Produk::find($item['id']);  // 'id' berasal dari data-* attribute di view
-
-                if (!$produk) {
-                    throw new \Exception('Produk dengan ID ' . $item['id'] . ' tidak ditemukan.');
+                // Jika ada diskon, POTONG HARGANYA di sini
+                if ($persentaseDiskon > 0) {
+                    $potongan        = ($hargaItemFinal * $persentaseDiskon) / 100;
+                    $hargaItemFinal -= $potongan;
                 }
 
-                if ($produk->jumlah_222336 < $item['jumlah']) {  // 'jumlah' dari data-*
-                    throw new \Exception('Stok produk ' . $produk->nama_222336 . ' tidak mencukupi. Stok tersedia: ' . $produk->jumlah_222336);
-                }
+                // Kurangi stok
+                $procItem['produk']->decrement('jumlah_222336', $procItem['jumlah']);
 
-                // Kurangi stok produk
-                $produk->decrement('jumlah_222336', $item['jumlah']);
-
-                $hargaTotalItem = $item['subtotal'];  // 'subtotal' dari data-*
-                $totalHarga    += $hargaTotalItem;
-
-                // 4. Buat record transaksi dengan menyertakan path bukti pembayaran
-                Transaksi::create([
+                // Buat transaksi dengan harga final
+                \App\Models\Transaksi::create([
                     'id_pelanggan_222336'      => $user->email_222336,
-                    'id_produk_222336'         => $produk->id_222336,
-                    'jumlah_222336'            => $item['jumlah'],
-                    'harga_total_222336'       => $hargaTotalItem,
+                    'id_produk_222336'         => $procItem['produk']->id_222336,
+                    'jumlah_222336'            => $procItem['jumlah'],
+                    'harga_total_222336'       => $hargaItemFinal,  // <-- HARGA SUDAH TERPOTONG
                     'status_222336'            => 'pending',
-                    'bukti_tf_222336'          => $filePath,  // <-- FIELD BARU UNTUK BUKTI BAYAR
+                    'bukti_tf_222336'          => $filePath,
                     'tanggal_transaksi_222336' => now(),
                 ]);
             }
 
-            // 5. Kosongkan keranjang belanja pengguna setelah berhasil checkout
-            $cartInDb = Cart::where('user_id_222336', $user->email_222336)->first();
+            // --- TAHAP 4: "BAKAR" VOUCHER & KOSONGKAN KERANJANG ---
+
+            // Jika ada voucher yang valid, UBAH STATUSNYA
+            if ($voucherValid) {
+                $voucherValid->update([
+                    'status_222336' => 'terpakai'
+                    // Anda juga bisa mengisi 'id_booking_terpakai' jika perlu
+                ]);
+            }
+
+            // Kosongkan keranjang
+            $cartInDb = \App\Models\Cart::where('user_id_222336', $user->email_222336)->first();
             if ($cartInDb) {
                 $cartInDb->items()->delete();
                 $cartInDb->delete();
             }
 
+            // Jika semua berhasil, commit perubahan ke database
             DB::commit();
 
-            // 6. Kirim response sukses untuk di-handle oleh JavaScript
             return response()->json([
                 'success'      => true,
-                'message'      => 'Checkout berhasil! Bukti pembayaran telah diupload.',
-                'redirect_url' => route('cart.index')  // Ganti dengan nama route riwayat transaksi Anda
+                'message'      => 'Checkout berhasil! Pesanan Anda sedang diproses.',
+                'redirect_url' => route('vouchers.my')  // Arahkan ke halaman riwayat atau voucher
             ]);
         } catch (\Exception $e) {
+            // Jika ada error di mana pun, batalkan semua perubahan
             DB::rollBack();
+
+            // Kirim pesan error yang jelas ke frontend
             return response()->json([
                 'success' => false,
                 'error'   => $e->getMessage()
-            ], 400);
+            ], 422);  // Gunakan status 422 untuk error validasi/logika
         }
     }
 

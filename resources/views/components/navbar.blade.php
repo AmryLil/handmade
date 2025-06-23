@@ -135,14 +135,14 @@
                     <nav class="p-4">
                         <p class="text-xs font-medium text-slate-500 uppercase tracking-wider mb-4">Menu</p>
 
-                        <a href="#"
-                            class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-slate-100 mb-1 {{ request()->routeIs('profile*') ? 'bg-slate-100' : '' }}">
+                        <a href="{{ route('vouchers.my') }}"
+                            class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-slate-100 mb-1 {{ request()->routeIs('vouchers.my*') ? 'bg-slate-100' : '' }}">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-maroon-600" fill="none"
                                 viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                             </svg>
-                            <span class="font-medium text-slate-700">Profile Saya</span>
+                            <span class="font-medium text-slate-700">Voucher Saya</span>
                         </a>
 
                         <a href="{{ route('transaksi.index') }}"

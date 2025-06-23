@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Users;
+use App\Models\Voucher;
+use Carbon\Carbon;
 use Filament\Facades\Filament;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -51,12 +53,31 @@ class AuthController extends Controller
       // Regenerate session for security
       $request->session()->regenerate();
 
-      // Store additional session data
       session([
+        'user_id'   => Auth::user()->email_222336,
         'user_role' => Auth::user()->role_222336,
         'email'     => Auth::user()->email_222336,
-        'name'      => Auth::user()->name,
+        'name'      => Auth::user()->nama_222336,
       ]);
+
+      $user = Auth::user();
+
+      $voucherPenggunaBaru = Voucher::where('id_user_222336', $user->email_222336)
+        ->where('tipe_222336', 'pengguna_baru')
+        ->where('status_222336', 'tersedia')
+        ->first();
+
+      Log::debug('Hasil pencarian voucher untuk pengguna baru:', [
+        'user_email'        => $user->email_222336,
+        'voucher_ditemukan' => $voucherPenggunaBaru ? $voucherPenggunaBaru->toArray() : null
+      ]);
+
+      if ($voucherPenggunaBaru) {
+        $request->session()->put('show_new_user_voucher', [
+          'kode'   => $voucherPenggunaBaru->kode_voucher_222336,
+          'diskon' => $voucherPenggunaBaru->persentase_diskon_222336
+        ]);
+      }
 
       // Log success
       Log::info('Login successful for user:');
@@ -113,6 +134,15 @@ class AuthController extends Controller
       'birth_date_222336' => $request->birth_date,
       'role_222336'       => 'customer',
     ]);
+
+    if ($user) {
+      Voucher::create([
+        'id_user_222336'            => $user->email_222336,
+        'tipe_222336'               => 'pengguna_baru',
+        'persentase_diskon_222336'  => 15,  // Ganti sesuai keinginan
+        'tanggal_kadaluarsa_222336' => Carbon::now()->addDays(14),  // Berlaku 14 hari
+      ]);
+    }
 
     return redirect('/login');
   }
