@@ -39,7 +39,7 @@
                                 @if ($item->path_img_222336)
                                     <img src="{{ asset('storage/' . $item->path_img_222336) }}"
                                         alt="{{ $item->nama_222336 }}"
-                                        class="w-full h-64 lg:h-80 object-cover group-hover:scale-105 transition-transform duration-500">
+                                        class="w-full h-full  object-cover group-hover:scale-105 transition-transform duration-500">
                                 @else
                                     <div
                                         class="w-full h-64 lg:h-80 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center group-hover:from-red-50 group-hover:to-red-100 transition-all duration-300">

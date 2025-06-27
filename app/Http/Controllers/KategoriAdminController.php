@@ -150,7 +150,12 @@ class KategoriAdminController extends Controller
   {
     $kategori = KategoriProduk::findOrFail($id);
 
-    // Delete image if exists
+    if ($kategori->produk()->count() > 0) {
+      return redirect()
+        ->back()  // Kembali ke halaman tempat tombol hapus diklik
+        ->with('error', 'Gagal menghapus! Kategori ini masih digunakan oleh produk lain.');
+    }
+
     if ($kategori->path_img_222336) {
       Storage::disk('public')->delete($kategori->path_img_222336);
     }
